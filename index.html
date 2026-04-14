@@ -229,14 +229,14 @@ section { position:relative; overflow:hidden; }
 /* Панель: текст слева, иллюстрация справа */
 .inside-panel { display:none; }
 .inside-panel.active {
-  display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:center;
+  display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start;
   animation:panelIn .4s ease;
 }
 .inside-big-text { font-family:'Playfair Display',serif; font-size:clamp(1.4rem,2.8vw,2.2rem); font-weight:700; color:var(--warm-brown); line-height:1.2; font-style:italic; }
 .inside-desc { font-family:'Cormorant Garamond',serif; font-size:clamp(0.95rem,1.6vw,1.2rem); color:var(--text-soft); line-height:1.6; margin-top:10px; }
 .inside-illus {
-  border-radius:20px; overflow:hidden; aspect-ratio:3/4; position:relative;
-  box-shadow:0 8px 32px rgba(90,48,24,.15);
+  border-radius:16px; overflow:hidden; aspect-ratio:4/5; position:relative;
+  box-shadow:0 6px 24px rgba(90,48,24,.13); max-height:340px;
 }
 .inside-illus img {
   width:100%; height:100%; object-fit:cover; display:block;
@@ -445,7 +445,7 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
         <p class="inside-desc">Небольшие театральные постановки, сторителлинг, ролевые игры. Смотрим, участвуем, переживаем вместе. Театр здесь — не спектакль «для галочки», а живое приключение, в котором каждый может стать героем истории.</p>
       </div>
       <div class="inside-illus">
-        <img src="Frame_1.png" alt="Театр" onerror="this.parentElement.style.background='var(--pale-peach)'">
+        <img src="Frame 1.png" alt="Театр" onerror="this.parentElement.style.background='var(--pale-peach)'">
       </div>
     </div>
     <div class="inside-panel" id="inside-books">
@@ -454,7 +454,7 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
         <p class="inside-desc">Читаем книгу полностью или частично, затем максимально погружаемся в её контекст через игру. Ребусы, загадки, квесты, задачки ТРИЗ, сочинительство. Прокладываем мостики к другим книгам и областям знаний.</p>
       </div>
       <div class="inside-illus">
-        <img src="Frame_2.png" alt="Книги" onerror="this.parentElement.style.background='var(--pale-blue)'">
+        <img src="Frame 2.png" alt="Книги" onerror="this.parentElement.style.background='var(--pale-blue)'">
       </div>
     </div>
     <div class="inside-panel" id="inside-trips">
@@ -463,7 +463,7 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
         <p class="inside-desc">Гуляем и исследуем вместе. Консерватория и КЗЧ, городские площадки, парки и леса, другие города. Совместное познание мира и честные ответы на детские вопросы — без упрощений.</p>
       </div>
       <div class="inside-illus">
-        <img src="Frame_5.png" alt="Экскурсии" onerror="this.parentElement.style.background='var(--pale-yellow)'">
+        <img src="Frame 5.png" alt="Экскурсии" onerror="this.parentElement.style.background='var(--pale-yellow)'">
       </div>
     </div>
     <div class="inside-panel" id="inside-craft">
@@ -472,7 +472,7 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
         <p class="inside-desc">Обязательно что-нибудь делаем руками. Мастерим, рисуем, лепим или даже готовим бутерброды. Творчество здесь — не урок рисования, а способ остаться внутри истории и унести её домой.</p>
       </div>
       <div class="inside-illus">
-        <img src="Frame_4.png" alt="Творчество" onerror="this.parentElement.style.background='#d4e8cc'">
+        <img src="Frame 4.png" alt="Творчество" onerror="this.parentElement.style.background='#d4e8cc'">
       </div>
     </div>
   </div>

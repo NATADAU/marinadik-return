@@ -315,11 +315,10 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:860px){
   .inside-panel.active{grid-template-columns:1fr}
-  .inside-illus{aspect-ratio:16/9;max-height:280px}
+  .inside-illus{aspect-ratio:3/4;max-height:none}
 }
 @media(max-width:680px){
   .section-inner{padding:28px 18px}
-  .inside-cards{grid-template-columns:repeat(2,1fr)}
   .forwhom-grid{grid-template-columns:1fr}
   .atmo-quotes{grid-template-columns:1fr}
   .tab-bar{display:none}
@@ -331,6 +330,43 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
   .carousel-arrow{width:36px;height:36px;font-size:1rem}
   .carousel-arrow.prev{left:8px} .carousel-arrow.next{right:8px}
   footer{padding:32px 16px 24px}
+}
+
+/* ── МОБИЛЬНЫЙ АККОРДЕОН для "Что внутри" ── */
+@media(max-width:680px){
+  .inside-cards{display:none}
+  .inside-panel{display:block!important;margin-bottom:8px}
+  .inside-panel.active .inside-accordion-header,
+  .inside-panel .inside-accordion-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;border-radius:14px;cursor:pointer;
+    font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
+    color:var(--text-soft);background:rgba(255,255,255,.6);
+    border:1.5px solid rgba(90,48,24,.12);transition:all .25s;
+    user-select:none;
+  }
+  .inside-panel.active .inside-accordion-header{
+    color:var(--warm-brown);background:white;
+    border-color:var(--dusty-rose);border-radius:14px 14px 0 0;
+  }
+  .inside-accordion-arrow{
+    font-size:1rem;transition:transform .3s ease;opacity:.5;
+  }
+  .inside-panel.active .inside-accordion-arrow{transform:rotate(180deg);opacity:1;}
+  .inside-accordion-body{
+    display:none;padding:0;
+  }
+  .inside-panel.active .inside-accordion-body{
+    display:block;
+    background:white;border:1.5px solid var(--dusty-rose);
+    border-top:none;border-radius:0 0 14px 14px;
+    padding:16px;
+  }
+  .inside-panel.active .inside-illus{
+    aspect-ratio:4/5;max-height:none;width:100%;margin-bottom:12px;
+  }
+  .inside-panel .inside-big-text{font-size:1.2rem;margin-bottom:6px}
+  .inside-panel .inside-desc{font-size:0.95rem}
 }
 </style>
 </head>
@@ -443,49 +479,54 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
     </div>
 
     <div class="inside-panel active" id="inside-theatre">
-      <div>
+      <div class="inside-accordion-header" data-inside="theatre"><span>Театр</span><span class="inside-accordion-arrow">▾</span></div>
+      <div class="inside-accordion-body"><div>
         <p class="inside-big-text">Игра и театр — живые эмоции и перевоплощения</p>
         <p class="inside-desc">Небольшие театральные постановки, сторителлинг, ролевые игры. Смотрим, участвуем, переживаем вместе. Театр здесь — не спектакль «для галочки», а живое приключение, в котором каждый может стать героем истории.</p>
       </div>
       <div class="inside-illus">
         <img src="Frame%201.png" alt="Театр" onerror="this.parentElement.style.background='var(--pale-peach)'">
-      </div>
+      </div></div>
     </div>
     <div class="inside-panel" id="inside-books">
-      <div>
+      <div class="inside-accordion-header" data-inside="books"><span>Книги</span><span class="inside-accordion-arrow">▾</span></div>
+      <div class="inside-accordion-body"><div>
         <p class="inside-big-text">Книги и смыслы — погружение в истории</p>
         <p class="inside-desc">Читаем книгу полностью или частично, затем максимально погружаемся в её контекст через игру. Ребусы, загадки, квесты, задачки ТРИЗ, сочинительство. Прокладываем мостики к другим книгам и областям знаний.</p>
       </div>
       <div class="inside-illus">
         <img src="Frame%202.png" alt="Книги" onerror="this.parentElement.style.background='var(--pale-blue)'">
-      </div>
+      </div></div>
     </div>
     <div class="inside-panel" id="inside-trips">
-      <div>
+      <div class="inside-accordion-header" data-inside="trips"><span>Экскурсии</span><span class="inside-accordion-arrow">▾</span></div>
+      <div class="inside-accordion-body"><div>
         <p class="inside-big-text">Экскурсии и прогулки — познание мира вместе</p>
         <p class="inside-desc">Гуляем и исследуем вместе. Консерватория и КЗЧ, городские площадки, парки и леса, другие города. Совместное познание мира и честные ответы на детские вопросы — без упрощений.</p>
       </div>
       <div class="inside-illus">
         <img src="Frame%205.png" alt="Экскурсии" onerror="this.parentElement.style.background='var(--pale-yellow)'">
-      </div>
+      </div></div>
     </div>
     <div class="inside-panel" id="inside-walks">
-      <div>
+      <div class="inside-accordion-header" data-inside="walks"><span>Прогулки</span><span class="inside-accordion-arrow">▾</span></div>
+      <div class="inside-accordion-body"><div>
         <p class="inside-big-text">Прогулки — город как открытая книга</p>
         <p class="inside-desc">Гуляем и смотрим вокруг внимательно. Парки, дворы, набережные, переулки. Замечаем то, что обычно проходит мимо — архитектуру, природу, людей, детали. Город становится живым и понятным, если уметь его читать.</p>
       </div>
       <div class="inside-illus">
         <img src="Frame%206.png" alt="Прогулки" onerror="this.parentElement.style.background='var(--pale-blue)'">
-      </div>
+      </div></div>
     </div>
     <div class="inside-panel" id="inside-craft">
-      <div>
+      <div class="inside-accordion-header" data-inside="craft"><span>Творчество</span><span class="inside-accordion-arrow">▾</span></div>
+      <div class="inside-accordion-body"><div>
         <p class="inside-big-text">Творчество и мастер-классы — делаем руками</p>
         <p class="inside-desc">Обязательно что-нибудь делаем руками. Мастерим, рисуем, лепим или даже готовим бутерброды. Творчество здесь — не урок рисования, а способ остаться внутри истории и унести её домой.</p>
       </div>
       <div class="inside-illus">
         <img src="Frame%204.png" alt="Творчество" onerror="this.parentElement.style.background='#d4e8cc'">
-      </div>
+      </div></div>
     </div>
   </div>
 </section>
@@ -617,12 +658,30 @@ document.querySelectorAll('.tab-btn,.tab-btn-mobile').forEach(btn=>{
 });
 
 /* ── INSIDE CARDS ── */
+function switchInsidePanel(id){
+  document.querySelectorAll('.inside-card-btn').forEach(b=>b.classList.toggle('active',b.dataset.inside===id));
+  document.querySelectorAll('.inside-panel').forEach(p=>p.classList.toggle('active',p.id==='inside-'+id));
+}
 document.querySelectorAll('.inside-card-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.inside-card-btn').forEach(b=>b.classList.remove('active'));
+  btn.addEventListener('click',()=>switchInsidePanel(btn.dataset.inside));
+});
+// Мобильный аккордеон
+document.querySelectorAll('.inside-accordion-header').forEach(header=>{
+  header.addEventListener('click',()=>{
+    const id=header.dataset.inside;
+    const panel=document.getElementById('inside-'+id);
+    const isActive=panel.classList.contains('active');
+    // Закрываем все
     document.querySelectorAll('.inside-panel').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('inside-'+btn.dataset.inside).classList.add('active');
+    // Открываем нажатую (если она не была активна)
+    if(!isActive){
+      panel.classList.add('active');
+      // Скроллим к панели с небольшим отступом
+      setTimeout(()=>{
+        const top=panel.getBoundingClientRect().top+window.scrollY-80;
+        window.scrollTo({top,behavior:'smooth'});
+      },50);
+    }
   });
 });
 

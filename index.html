@@ -203,7 +203,7 @@ section { position:relative; overflow:hidden; }
 
 /* 4 карточки-кнопки — одинаковые, в ряд */
 .inside-cards {
-  display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px;
+  display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:20px;
 }
 .inside-card-btn {
   background:rgba(255,255,255,.6); border:1.5px solid rgba(90,48,24,.12);
@@ -217,6 +217,8 @@ section { position:relative; overflow:hidden; }
 .inside-card-btn.active.blue { border-color:var(--soft-blue); box-shadow:0 6px 24px rgba(122,159,181,.2); }
 .inside-card-btn.active.gold { border-color:var(--warm-yellow); box-shadow:0 6px 24px rgba(212,168,75,.2); }
 .inside-card-btn.active.sage { border-color:var(--sage); box-shadow:0 6px 24px rgba(122,152,112,.2); }
+.inside-card-btn.active.mint { border-color:var(--soft-blue); box-shadow:0 6px 24px rgba(122,159,181,.2); }
+.inside-card-btn.active.mint .inside-card-dot { background:var(--soft-blue); }
 .inside-card-dot {
   width:8px; height:8px; border-radius:50%; background:var(--dusty-rose); margin:4px auto 0;
   opacity:0; transition:opacity .25s;
@@ -229,7 +231,7 @@ section { position:relative; overflow:hidden; }
 /* Панель: текст слева, иллюстрация справа */
 .inside-panel { display:none; }
 .inside-panel.active {
-  display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start;
+  display:grid; grid-template-columns:2fr 1fr; gap:28px; align-items:start;
   animation:panelIn .4s ease;
 }
 .inside-big-text { font-family:'Playfair Display',serif; font-size:clamp(1.4rem,2.8vw,2.2rem); font-weight:700; color:var(--warm-brown); line-height:1.2; font-style:italic; }
@@ -437,6 +439,7 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
       <button class="inside-card-btn blue"        data-inside="books">Книги<div class="inside-card-dot"></div></button>
       <button class="inside-card-btn gold"        data-inside="trips">Экскурсии<div class="inside-card-dot"></div></button>
       <button class="inside-card-btn sage"        data-inside="craft">Творчество<div class="inside-card-dot"></div></button>
+      <button class="inside-card-btn mint"       data-inside="walks">Прогулки<div class="inside-card-dot"></div></button>
     </div>
 
     <div class="inside-panel active" id="inside-theatre">
@@ -464,6 +467,15 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
       </div>
       <div class="inside-illus">
         <img src="Frame%205.png" alt="Экскурсии" onerror="this.parentElement.style.background='var(--pale-yellow)'">
+      </div>
+    </div>
+    <div class="inside-panel" id="inside-walks">
+      <div>
+        <p class="inside-big-text">Прогулки — город как открытая книга</p>
+        <p class="inside-desc">Гуляем и смотрим вокруг внимательно. Парки, дворы, набережные, переулки. Замечаем то, что обычно проходит мимо — архитектуру, природу, людей, детали. Город становится живым и понятным, если уметь его читать.</p>
+      </div>
+      <div class="inside-illus">
+        <img src="Frame%206.png" alt="Прогулки" onerror="this.parentElement.style.background='var(--pale-blue)'">
       </div>
     </div>
     <div class="inside-panel" id="inside-craft">

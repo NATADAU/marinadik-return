@@ -230,7 +230,10 @@ section { position:relative; overflow:hidden; }
 .inside-card-btn.active.sage .inside-card-dot { background:var(--sage); }
 
 /* Панель: текст слева, иллюстрация справа */
-.inside-panel { display:none; }
+.inside-panel { display:block; opacity:0; pointer-events:none; position:absolute; width:100%; }
+.inside-panel.active { opacity:1; pointer-events:auto; position:relative; animation:insideFadeIn .35s ease forwards; }
+@keyframes insideFadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.inside-panels-wrap { min-height:clamp(280px,35vw,480px); }
 .inside-panel.active { display:block; animation:panelIn .4s ease; }
 /* Десктоп: сетка внутри acc-body */
 .inside-acc-header { display:none; }
@@ -479,6 +482,7 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
       <button class="inside-card-btn mint"       data-inside="walks">Прогулки<div class="inside-card-dot"></div></button>
     </div>
 
+    <div class="inside-panels-wrap">
     <div class="inside-panel active" id="inside-theatre">
       <div class="inside-acc-header" data-inside="theatre"><span>Театр</span><span class="inside-acc-arrow">▾</span></div>
       <div class="inside-acc-body">
@@ -538,6 +542,7 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
           <img src="Frame%206.png" alt="Прогулки" onerror="this.parentElement.style.background='var(--pale-blue)'">
         </div>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -691,10 +696,7 @@ document.querySelectorAll('.inside-acc-header').forEach(header=>{
     document.querySelectorAll('.inside-panel').forEach(p=>p.classList.remove('active'));
     if(!isActive){
       panel.classList.add('active');
-      setTimeout(()=>{
-        const top=panel.getBoundingClientRect().top+window.scrollY-80;
-        window.scrollTo({top,behavior:'smooth'});
-      },50);
+
     }
   });
 });

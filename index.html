@@ -204,8 +204,7 @@ section { position:relative; overflow:hidden; }
 /* 4 карточки-кнопки — одинаковые, в ряд */
 .inside-cards {
   display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:20px;
-  position:sticky; top:60px; z-index:100;
-  background:var(--cream); padding:10px 0 8px;
+
 }
 .inside-card-btn {
   background:rgba(255,255,255,.6); border:1.5px solid rgba(90,48,24,.12);
@@ -679,16 +678,7 @@ function switchInsidePanel(id){
 
 document.querySelectorAll('.inside-card-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    const id=btn.dataset.inside;
-    switchInsidePanel(id);
-    // Десктоп: скроллим к панели с контентом, не к кнопкам
-    if(window.innerWidth>680){
-      const panel=document.getElementById('inside-'+id);
-      setTimeout(()=>{
-        const top=panel.getBoundingClientRect().top+window.scrollY-80;
-        window.scrollTo({top,behavior:'smooth'});
-      },50);
-    }
+    switchInsidePanel(btn.dataset.inside);
   });
 });
 

@@ -6,427 +6,380 @@
 <title>МариНадик возвращается</title>
 <link rel="preload" href="маринадик.png" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Libre+Baskerville:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@1,700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #faf5ee;
+  --cream:      #faf5ee;
   --warm-brown: #5a3018;
   --dusty-rose: #c4877a;
-  --muted-red: #a84d42;
-  --soft-blue: #7a9fb5;
-  --warm-yellow: #d4a84b;
-  --sage: #7a9870;
+  --muted-red:  #a84d42;
+  --soft-blue:  #7a9fb5;
+  --warm-yellow:#d4a84b;
+  --sage:       #7a9870;
   --pale-peach: #eeddd3;
-  --pale-blue: #d5e5ef;
-  --pale-yellow: #f0e2c0;
-  --text-main: #3a2010;
-  --text-soft: #7a5535;
-  --ink: #2a1a08;
-  --together-bg: #c4a882;
+  --pale-blue:  #d5e5ef;
+  --pale-yellow:#f0e2c0;
+  --text-main:  #3a2010;
+  --text-soft:  #7a5535;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { font-family:'Cormorant Garamond',serif; background:var(--cream); color:var(--text-main); overflow-x:hidden; }
 
 @media(min-width:769px){
   body::before {
-    content:''; position:fixed; inset:0;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events:none; z-index:9000; opacity:0.6;
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:9000; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
   }
 }
 
-/* ═══ NAV ═══ */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  background:rgba(250,245,238,0.95); backdrop-filter:blur(14px);
-  border-bottom:1.5px solid rgba(90,48,24,0.1); height:60px;
-  display:flex; align-items:center; justify-content:center;
-  padding:0 16px;
+/* ── НАВ ── */
+#main-nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  height:60px; background:rgba(250,245,238,.96); backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(90,48,24,.1);
+  display:flex; align-items:center; justify-content:center; padding:0 16px;
 }
-.nav-desktop {
-  display:flex; align-items:center; gap:0; overflow-x:auto;
-}
-.nav-desktop::-webkit-scrollbar { display:none; }
+.nav-desktop { display:flex; align-items:center; gap:2px; }
 .nav-tab {
-  font-family:'Playfair Display',serif; font-size:clamp(0.78rem,1.3vw,1rem);
-  color:var(--text-soft); text-decoration:none; padding:8px 13px; border-radius:30px;
-  transition:all .3s; white-space:nowrap; position:relative; flex-shrink:0;
+  font-family:'Playfair Display',serif; font-size:clamp(.78rem,1.2vw,.95rem);
+  color:var(--text-soft); text-decoration:none; padding:7px 14px;
+  border-radius:30px; transition:color .2s; white-space:nowrap; position:relative;
 }
 .nav-tab::after {
-  content:''; position:absolute; bottom:4px; left:50%; right:50%;
-  height:2px; background:var(--dusty-rose); border-radius:2px; transition:.3s;
+  content:''; position:absolute; bottom:4px; left:14px; right:14px;
+  height:2px; background:var(--dusty-rose); border-radius:2px;
+  transform:scaleX(0); transition:transform .25s;
 }
 .nav-tab:hover { color:var(--warm-brown); }
-.nav-tab:hover::after, .nav-tab.active::after { left:13px; right:13px; }
+.nav-tab:hover::after, .nav-tab.active::after { transform:scaleX(1); }
 .nav-tab.active { color:var(--warm-brown); font-weight:700; }
 
-/* ═══ БУРГЕР ═══ */
-.nav-mobile {
-  display:none; width:100%; align-items:center; justify-content:space-between;
-}
-.nav-mobile-brand {
-  display:flex; align-items:center; gap:10px;
-  font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+.nav-mobile { display:none; width:100%; align-items:center; justify-content:space-between; }
+.nav-brand {
+  display:flex; align-items:center; gap:9px;
+  font-family:'Playfair Display',serif; font-weight:700; font-size:.95rem;
   color:var(--warm-brown); text-decoration:none;
 }
-.nav-mobile-brand img { width:34px; height:34px; object-fit:contain; }
-.burger-btn {
-  width:44px; height:44px; border:none; background:transparent;
-  cursor:pointer; border-radius:10px; transition:background .2s;
-  padding:0; position:relative; flex-shrink:0;
-}
-.burger-btn:hover { background:rgba(90,48,24,.07); }
-.burger-btn .burger-icon,
-.burger-btn .close-icon {
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  transition:opacity .25s ease, transform .25s ease;
-}
-.burger-btn .close-icon { opacity:0; transform:rotate(-45deg) scale(.7); }
-.burger-btn.open .burger-icon { opacity:0; transform:rotate(45deg) scale(.7); }
-.burger-btn.open .close-icon { opacity:1; transform:rotate(0deg) scale(1); }
+.nav-brand img { width:32px; height:32px; object-fit:contain; }
 
-.mobile-menu {
-  position:fixed; top:60px; left:0; right:0; z-index:999;
-  background:rgba(250,245,238,0.98); backdrop-filter:blur(20px);
-  border-bottom:1.5px solid rgba(90,48,24,0.1);
-  padding:6px 0 14px;
-  transform:translateY(-110%); opacity:0;
-  transition:transform .35s cubic-bezier(.4,0,.2,1), opacity .3s ease;
-  pointer-events:none;
+#burgerBtn {
+  width:42px; height:42px; border:none; background:transparent;
+  cursor:pointer; border-radius:8px; padding:0;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .2s; flex-shrink:0;
+}
+#burgerBtn:hover { background:rgba(90,48,24,.07); }
+#burgerBtn svg { display:block; pointer-events:none; }
+#burgerBtn .ic-close { display:none; }
+#burgerBtn.open .ic-burger { display:none; }
+#burgerBtn.open .ic-close  { display:block; }
+
+#mobileMenu {
+  position:fixed; top:60px; left:0; right:0; z-index:499;
+  background:rgba(250,245,238,.98); backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(90,48,24,.1);
   box-shadow:0 12px 32px rgba(90,48,24,.1);
+  padding:8px 0 16px;
+  transform:translateY(-110%); opacity:0; pointer-events:none;
+  transition:transform .3s cubic-bezier(.4,0,.2,1), opacity .25s ease;
 }
-.mobile-menu.open { transform:translateY(0); opacity:1; pointer-events:auto; }
-.mobile-menu a {
+#mobileMenu.open { transform:translateY(0); opacity:1; pointer-events:auto; }
+#mobileMenu a {
   display:flex; align-items:center; gap:12px;
-  font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700;
-  color:var(--text-soft); text-decoration:none; padding:13px 22px;
-  border-radius:10px; margin:2px 10px; transition:all .2s;
+  font-family:'Playfair Display',serif; font-weight:700; font-size:1.05rem;
+  color:var(--text-soft); text-decoration:none;
+  padding:12px 20px; margin:2px 8px; border-radius:10px; transition:all .15s;
 }
-.mobile-menu a .m-icon { font-size:1.1rem; width:26px; text-align:center; flex-shrink:0; }
-.mobile-menu a:hover, .mobile-menu a.active {
-  background:rgba(196,135,122,.1); color:var(--warm-brown);
-}
+#mobileMenu a .ico { width:24px; text-align:center; font-size:1rem; flex-shrink:0; }
+#mobileMenu a:hover, #mobileMenu a.active { background:rgba(196,135,122,.12); color:var(--warm-brown); }
 
 @media(max-width:680px){
   .nav-desktop { display:none; }
-  .nav-mobile { display:flex; }
+  .nav-mobile  { display:flex; }
 }
 
-/* ═══ BLOBS ═══ */
-.wc-blob {
-  position:absolute; border-radius:60% 40% 55% 45%/45% 55% 40% 60%;
-  filter:blur(52px); opacity:0.26; pointer-events:none;
-  animation:blobDrift 12s ease-in-out infinite alternate;
-}
-@keyframes blobDrift { 0%{transform:translate(0,0) scale(1) rotate(0deg)} 100%{transform:translate(20px,-25px) scale(1.06) rotate(4deg)} }
-
-/* ═══ HERO ═══ */
+/* ── HERO ── */
 #hero {
   min-height:100vh; display:flex; flex-direction:column;
   align-items:center; justify-content:center; text-align:center;
-  padding:70px 24px 40px; position:relative; overflow:hidden;
+  padding:80px 24px 48px; position:relative; overflow:hidden;
 }
-.hero-blob-1{width:540px;height:540px;background:#c4877a;top:-110px;right:-130px;}
-.hero-blob-2{width:400px;height:400px;background:#d4a84b;bottom:-90px;left:-110px;animation-delay:3s;}
-.hero-blob-3{width:320px;height:320px;background:#7a9fb5;top:35%;left:-90px;animation-delay:1.5s;}
-.hero-blob-4{width:280px;height:280px;background:#eeddd3;bottom:100px;right:5%;animation-delay:5s;}
-.hero-logo-wrap { position:relative; z-index:2; margin-bottom:12px; opacity:0; }
-.hero-logo { width:clamp(120px,15vw,200px); height:auto; display:block; transform-origin:center bottom; }
-@keyframes logoFloat { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-14px) rotate(1deg)} }
-@keyframes logoIn { from{opacity:0;transform:translateY(-60px) scale(.7)} to{opacity:1;transform:translateY(0) scale(1)} }
+.blob {
+  position:absolute; border-radius:60% 40% 55% 45%/45% 55% 40% 60%;
+  filter:blur(52px); opacity:.25; pointer-events:none;
+  animation:blobDrift 13s ease-in-out infinite alternate;
+}
+@keyframes blobDrift { from{transform:translate(0,0) scale(1)} to{transform:translate(18px,-22px) scale(1.06)} }
+.b1{width:500px;height:500px;background:#c4877a;top:-120px;right:-120px;}
+.b2{width:380px;height:380px;background:#d4a84b;bottom:-80px;left:-100px;animation-delay:3s;}
+.b3{width:300px;height:300px;background:#7a9fb5;top:35%;left:-80px;animation-delay:1.5s;}
+.b4{width:260px;height:260px;background:#eeddd3;bottom:90px;right:4%;animation-delay:5s;}
+
+.hero-logo-wrap {
+  position:relative; z-index:2; margin-bottom:14px;
+  animation:logoIn 1.1s cubic-bezier(.34,1.56,.64,1) .05s both;
+}
+.hero-logo {
+  width:clamp(110px,14vw,190px); height:auto; display:block;
+  animation:logoFloat 4s ease-in-out 1.15s infinite; transform-origin:center bottom;
+}
+@keyframes logoIn { from{opacity:0;transform:translateY(-50px) scale(.72)} to{opacity:1;transform:translateY(0) scale(1)} }
+@keyframes logoFloat { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-12px) rotate(1deg)} }
+
 .hero-title {
-  font-family:'Playfair Display',serif; font-size:clamp(2rem,5.5vw,4rem); font-weight:900;
-  color:var(--warm-brown); line-height:1.05; letter-spacing:-.5px;
-  position:relative; z-index:2; animation:fadeUp 1s ease .4s both;
+  font-family:'Playfair Display',serif; font-size:clamp(2rem,5.5vw,3.8rem);
+  font-weight:900; color:var(--warm-brown); line-height:1.06; letter-spacing:-.5px;
+  position:relative; z-index:2; animation:fadeUp 1s ease .35s both;
 }
 .hero-title em { font-family:'Libre Baskerville',serif; font-style:italic; color:var(--dusty-rose); display:block; font-size:.85em; font-weight:700; }
 .hero-sub {
-  font-family:'Cormorant Garamond',serif; font-size:clamp(1rem,2vw,1.35rem);
-  color:var(--text-soft); font-style:italic; font-weight:400; margin-top:14px;
-  position:relative; z-index:2; max-width:480px; line-height:1.5; animation:fadeUp 1s ease .7s both;
+  font-family:'Cormorant Garamond',serif; font-size:clamp(1rem,2vw,1.3rem);
+  color:var(--text-soft); font-style:italic; margin-top:14px;
+  max-width:460px; line-height:1.5; position:relative; z-index:2;
+  animation:fadeUp 1s ease .65s both;
 }
-@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 
-/* ═══ SECTION BASE ═══ */
+/* ── ОБЩЕЕ ДЛЯ СЕКЦИЙ ── */
 section { position:relative; overflow:hidden; }
-.section-inner { max-width:1100px; margin:0 auto; padding:36px 32px; }
-.section-eyebrow { font-family:'Cormorant Garamond',serif; font-size:clamp(0.8rem,1.1vw,0.9rem); letter-spacing:5px; text-transform:uppercase; color:var(--dusty-rose); margin-bottom:4px; }
-.section-title { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,4.5vw,3.4rem); font-weight:900; color:var(--warm-brown); line-height:1.05; margin-bottom:4px; }
-.section-title em { font-style:italic; color:var(--dusty-rose); }
-.section-rule { width:48px; height:3px; border-radius:2px; background:var(--dusty-rose); margin-bottom:24px; }
-@keyframes panelIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.si { max-width:1100px; margin:0 auto; padding:48px 32px; }
+@media(max-width:680px){ .si { padding:36px 18px; } }
 
-/* ═══ ИСТОРИЯ ═══ */
-#history { background:linear-gradient(160deg,#fff9f3 0%,var(--pale-blue) 100%); }
-#history .section-rule { background:var(--soft-blue); }
+.eyebrow { font-family:'Cormorant Garamond',serif; font-size:.8rem; letter-spacing:5px; text-transform:uppercase; color:var(--dusty-rose); margin-bottom:4px; }
+.sec-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,3.2rem); font-weight:900; color:var(--warm-brown); line-height:1.06; margin-bottom:6px; }
+.sec-title em { font-style:italic; color:var(--dusty-rose); }
+.sec-rule { width:44px; height:3px; border-radius:2px; background:var(--dusty-rose); margin-bottom:28px; }
 
-/* Вкладки десктоп */
+.rv { opacity:0; transform:translateY(22px); transition:opacity .65s ease, transform .65s ease; }
+.rv.in { opacity:1; transform:translateY(0); }
+
+/* ── ИСТОРИЯ ── */
+#history { background:linear-gradient(155deg,#fff9f3,var(--pale-blue)); }
+#history .sec-rule { background:var(--soft-blue); }
+
 .tab-bar { display:flex; gap:6px; margin-bottom:0; }
 .tab-btn {
-  font-family:'Playfair Display',serif; font-size:clamp(0.9rem,1.5vw,1.1rem); font-weight:700;
+  font-family:'Playfair Display',serif; font-size:clamp(.88rem,1.4vw,1.05rem); font-weight:700;
   padding:10px 22px; border:2px solid transparent; border-bottom:none;
   border-radius:14px 14px 0 0; background:rgba(255,255,255,.45); color:var(--text-soft);
-  cursor:pointer; transition:all .25s; position:relative; top:2px;
+  cursor:pointer; transition:all .2s; position:relative; top:2px;
 }
 .tab-btn:hover { background:rgba(255,255,255,.7); color:var(--warm-brown); }
 .tab-btn.active { background:rgba(255,255,255,.92); color:var(--warm-brown); border-color:rgba(90,48,24,.12); z-index:2; }
-.tab-panel-wrap { background:rgba(255,255,255,.9); border:1.5px solid rgba(90,48,24,.1); border-radius:0 20px 20px 20px; padding:24px; box-shadow:0 6px 32px rgba(90,48,24,.07); }
-.tab-panel { display:none; }
-.tab-panel.active { display:block; animation:panelIn .4s ease; }
 
-/* Вкладки мобильный — сегментный переключатель */
-.tab-bar-mobile { display:none; background:rgba(255,255,255,.6); border-radius:50px; padding:4px; gap:4px; margin-bottom:16px; border:1.5px solid rgba(90,48,24,.1); }
-.tab-btn-mobile {
-  flex:1; font-family:'Playfair Display',serif; font-size:0.9rem; font-weight:700;
-  padding:9px 12px; border-radius:46px; border:none;
-  background:transparent; color:var(--text-soft); cursor:pointer; transition:all .25s;
-  text-align:center; white-space:nowrap;
+.tab-seg { display:none; background:rgba(255,255,255,.6); border-radius:50px; padding:4px; gap:4px; margin-bottom:16px; border:1.5px solid rgba(90,48,24,.1); }
+.tab-seg-btn {
+  flex:1; font-family:'Playfair Display',serif; font-size:.88rem; font-weight:700;
+  padding:8px 10px; border-radius:46px; border:none; background:transparent;
+  color:var(--text-soft); cursor:pointer; transition:all .22s; text-align:center;
 }
-.tab-btn-mobile.active { background:var(--dusty-rose); color:white; box-shadow:0 3px 12px rgba(196,135,122,.35); }
+.tab-seg-btn.active { background:var(--dusty-rose); color:#fff; box-shadow:0 3px 10px rgba(196,135,122,.35); }
 
-.trait-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
-.trait-card { background:rgba(250,245,238,.85); border-radius:14px; padding:18px 16px; border-left:4px solid var(--dusty-rose); transition:transform .2s; }
-.trait-card:nth-child(2n){border-left-color:var(--soft-blue)} .trait-card:nth-child(3n){border-left-color:var(--warm-yellow)} .trait-card:nth-child(4n){border-left-color:var(--sage)}
-.trait-card:hover{transform:translateX(4px)}
-.trait-card h4 { font-family:'Playfair Display',serif; font-size:clamp(1rem,1.7vw,1.2rem); font-weight:700; color:var(--warm-brown); margin-bottom:4px; }
-.trait-card p { font-family:'Cormorant Garamond',serif; font-size:clamp(0.9rem,1.5vw,1.05rem); color:var(--text-soft); line-height:1.55; }
+.tab-wrap {
+  background:rgba(255,255,255,.9); border:1.5px solid rgba(90,48,24,.1);
+  border-radius:0 20px 20px 20px; padding:24px; box-shadow:0 6px 28px rgba(90,48,24,.07);
+}
+.tab-panel { display:none; }
+.tab-panel.active { display:block; animation:fadeUp .35s ease; }
+
+.trait-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:10px; }
+.trait-card { background:rgba(250,245,238,.85); border-radius:14px; padding:16px; border-left:4px solid var(--dusty-rose); transition:transform .2s; }
+.trait-card:nth-child(2n){ border-left-color:var(--soft-blue) }
+.trait-card:nth-child(3n){ border-left-color:var(--warm-yellow) }
+.trait-card:nth-child(4n){ border-left-color:var(--sage) }
+.trait-card:hover { transform:translateX(4px); }
+.trait-card h4 { font-family:'Playfair Display',serif; font-size:clamp(.95rem,1.6vw,1.15rem); font-weight:700; color:var(--warm-brown); margin-bottom:4px; }
+.trait-card p  { font-size:clamp(.88rem,1.4vw,1rem); color:var(--text-soft); line-height:1.55; }
 
 .timeline { margin-top:4px; }
-.tl-item { display:flex; gap:20px; margin-bottom:20px; align-items:flex-start; }
-.tl-dot { flex-shrink:0; width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:900; color:white; box-shadow:0 3px 12px rgba(90,48,24,.2); }
-.tl-dot.rose{background:linear-gradient(135deg,var(--dusty-rose),var(--muted-red))} .tl-dot.blue{background:linear-gradient(135deg,var(--soft-blue),#5a7f9a)} .tl-dot.gold{background:linear-gradient(135deg,var(--warm-yellow),#b8852a)}
-.tl-content h4 { font-family:'Playfair Display',serif; font-size:clamp(1rem,1.8vw,1.4rem); font-weight:700; color:var(--warm-brown); margin-bottom:4px; }
-.tl-content p { font-family:'Cormorant Garamond',serif; font-size:clamp(0.9rem,1.5vw,1.05rem); color:var(--text-soft); line-height:1.6; }
+.tl-row { display:flex; gap:18px; margin-bottom:20px; align-items:flex-start; }
+.tl-dot { flex-shrink:0; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.95rem; font-weight:900; color:#fff; box-shadow:0 3px 10px rgba(90,48,24,.2); }
+.tl-dot.rose { background:linear-gradient(135deg,var(--dusty-rose),var(--muted-red)) }
+.tl-dot.blue { background:linear-gradient(135deg,var(--soft-blue),#5a7f9a) }
+.tl-dot.gold { background:linear-gradient(135deg,var(--warm-yellow),#b8852a) }
+.tl-text h4 { font-family:'Playfair Display',serif; font-size:clamp(.95rem,1.7vw,1.35rem); font-weight:700; color:var(--warm-brown); margin-bottom:4px; }
+.tl-text p  { font-size:clamp(.88rem,1.4vw,1rem); color:var(--text-soft); line-height:1.6; }
 
-/* ═══ ЧТО ВНУТРИ ═══ */
+@media(max-width:680px){
+  .tab-bar { display:none; }
+  .tab-seg { display:flex; }
+  .tab-wrap { border-radius:16px; padding:18px; }
+}
+
+/* ── ЧТО ВНУТРИ ── */
 #inside { background:var(--cream); }
 
-/* 4 карточки-кнопки — одинаковые, в ряд */
-.inside-cards {
-  display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:20px;
+.ins-btns { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:20px; }
+@media(max-width:680px){ .ins-btns { grid-template-columns:repeat(3,1fr); } }
+@media(max-width:360px){ .ins-btns { grid-template-columns:repeat(2,1fr); } }
 
-}
-.inside-card-btn {
+.ins-btn {
   background:rgba(255,255,255,.6); border:1.5px solid rgba(90,48,24,.12);
-  border-radius:16px; padding:16px 12px; cursor:pointer; transition:all .25s;
+  border-radius:14px; padding:14px 10px; cursor:pointer; transition:all .22s;
   text-align:center; font-family:'Playfair Display',serif; font-weight:700;
-  color:var(--text-soft); font-size:clamp(0.85rem,1.4vw,1.05rem);
-  display:flex; flex-direction:column; align-items:center; gap:6px;
+  color:var(--text-soft); font-size:clamp(.82rem,1.3vw,1rem);
+  display:flex; flex-direction:column; align-items:center; gap:5px;
 }
-.inside-card-btn:hover { border-color:var(--dusty-rose); color:var(--warm-brown); background:rgba(255,255,255,.85); transform:translateY(-2px); }
-.inside-card-btn.active { background:white; border-color:var(--dusty-rose); color:var(--warm-brown); box-shadow:0 6px 24px rgba(196,135,122,.2); transform:translateY(-2px); }
-.inside-card-btn.active.blue { border-color:var(--soft-blue); box-shadow:0 6px 24px rgba(122,159,181,.2); }
-.inside-card-btn.active.gold { border-color:var(--warm-yellow); box-shadow:0 6px 24px rgba(212,168,75,.2); }
-.inside-card-btn.active.sage { border-color:var(--sage); box-shadow:0 6px 24px rgba(122,152,112,.2); }
-.inside-card-btn.active.mint { border-color:var(--soft-blue); box-shadow:0 6px 24px rgba(122,159,181,.2); }
-.inside-card-btn.active.mint .inside-card-dot { background:var(--soft-blue); }
-.inside-card-dot {
-  width:8px; height:8px; border-radius:50%; background:var(--dusty-rose); margin:4px auto 0;
-  opacity:0; transition:opacity .25s;
-}
-.inside-card-btn.active .inside-card-dot { opacity:1; }
-.inside-card-btn.active.blue .inside-card-dot { background:var(--soft-blue); }
-.inside-card-btn.active.gold .inside-card-dot { background:var(--warm-yellow); }
-.inside-card-btn.active.sage .inside-card-dot { background:var(--sage); }
+.ins-btn:hover { border-color:var(--dusty-rose); color:var(--warm-brown); background:rgba(255,255,255,.85); transform:translateY(-2px); }
+.ins-btn.active { background:#fff; color:var(--warm-brown); border-color:var(--dusty-rose); box-shadow:0 5px 20px rgba(196,135,122,.2); transform:translateY(-2px); }
+.ins-btn.blue.active  { border-color:var(--soft-blue);   box-shadow:0 5px 20px rgba(122,159,181,.2); }
+.ins-btn.gold.active  { border-color:var(--warm-yellow); box-shadow:0 5px 20px rgba(212,168,75,.2); }
+.ins-btn.sage.active  { border-color:var(--sage);        box-shadow:0 5px 20px rgba(122,152,112,.2); }
+.ins-dot { width:7px; height:7px; border-radius:50%; background:var(--dusty-rose); margin-top:3px; opacity:0; transition:opacity .2s; }
+.ins-btn.active      .ins-dot { opacity:1; }
+.ins-btn.blue.active .ins-dot { background:var(--soft-blue); }
+.ins-btn.gold.active .ins-dot { background:var(--warm-yellow); }
+.ins-btn.sage.active .ins-dot { background:var(--sage); }
 
-/* Панель: текст слева, иллюстрация справа */
-.inside-panels-wrap { position:relative; }
-.inside-panel { display:none; }
-.inside-panel.active { display:block; animation:insideFadeIn .35s ease forwards; }
-@keyframes insideFadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-/* Десктоп: сетка внутри acc-body */
-.inside-acc-header { display:none; }
-.inside-acc-body {
-  display:grid; grid-template-columns:2fr 1fr; gap:28px; align-items:start;
-}
-.inside-big-text { font-family:'Playfair Display',serif; font-size:clamp(1.4rem,2.8vw,2.2rem); font-weight:700; color:var(--warm-brown); line-height:1.2; font-style:italic; }
-.inside-desc { font-family:'Cormorant Garamond',serif; font-size:clamp(0.95rem,1.6vw,1.2rem); color:var(--text-soft); line-height:1.6; margin-top:10px; }
-.inside-illus {
-  border-radius:16px; overflow:hidden; aspect-ratio:16/9; position:relative;
-  box-shadow:0 6px 24px rgba(90,48,24,.13);
-}
-.inside-illus img {
-  width:100%; height:100%; object-fit:cover; display:block;
-}
+.ins-panel { display:none; }
+.ins-panel.active { display:block; animation:fadeUp .32s ease; }
 
-/* ═══ ДЛЯ КОГО ═══ */
-#forwhom{background:linear-gradient(160deg,var(--pale-yellow) 0%,var(--pale-peach) 100%)}
-.forwhom-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.forwhom-card{background:rgba(255,255,255,.72);border-radius:24px;padding:24px 26px;box-shadow:0 6px 28px rgba(90,48,24,.07);border:1.5px solid rgba(255,255,255,.9)}
-.forwhom-card h3{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2vw,1.65rem);font-weight:700;color:var(--warm-brown);margin-bottom:10px}
-.forwhom-card ul{list-style:none}
-.forwhom-card ul li{font-family:'Cormorant Garamond',serif;font-size:clamp(0.9rem,1.5vw,1.15rem);color:var(--text-soft);padding:7px 0;display:flex;gap:10px;align-items:flex-start;line-height:1.5;border-bottom:1px solid rgba(90,48,24,.07)}
-.forwhom-card ul li:last-child{border-bottom:none}
-.forwhom-card ul li::before{content:'✦';color:var(--dusty-rose);font-size:.8em;flex-shrink:0;margin-top:4px}
-/* Осветлённая плашка — тёплый бежевый вместо тёмно-коричневого */
-.forwhom-together{grid-column:1/-1;background:linear-gradient(135deg,#c4a882,#b8956e);border-radius:24px;padding:24px 36px;text-align:center;box-shadow:0 8px 32px rgba(90,48,24,.15);position:relative;overflow:hidden}
-.forwhom-together::before{content:'✦';position:absolute;font-size:8rem;color:rgba(255,255,255,.08);top:-16px;right:-8px}
-.forwhom-together p{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2.4vw,1.9rem);font-style:italic;color:white;line-height:1.4}
+.ins-body { display:grid; grid-template-columns:2fr 1fr; gap:28px; align-items:start; }
+@media(max-width:860px){ .ins-body { grid-template-columns:1fr; } }
 
-/* ═══ АТМОСФЕРА ═══ */
-#atmosphere{background:#fff8f2}
-.atmo-quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
-.atmo-q{background:rgba(255,255,255,.82);border-radius:20px;padding:20px;border:1.5px solid rgba(90,48,24,.08);box-shadow:0 3px 16px rgba(90,48,24,.05);transition:transform .3s,box-shadow .3s}
-.atmo-q:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(90,48,24,.1)}
-.atmo-q-icon{font-size:2rem;margin-bottom:6px;display:block}
-.atmo-q-text{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2vw,1.6rem);font-style:italic;color:var(--warm-brown);line-height:1.3}
-.atmo-final{border-left:3px solid var(--dusty-rose);padding:16px 24px;font-family:'Cormorant Garamond',serif;font-size:clamp(0.95rem,1.6vw,1.25rem);color:var(--text-soft);font-style:italic;line-height:1.65}
+.ins-big  { font-family:'Playfair Display',serif; font-size:clamp(1.35rem,2.6vw,2.1rem); font-weight:700; color:var(--warm-brown); line-height:1.22; font-style:italic; }
+.ins-desc { font-size:clamp(.92rem,1.5vw,1.15rem); color:var(--text-soft); line-height:1.65; margin-top:10px; }
+.ins-img  { border-radius:14px; overflow:hidden; aspect-ratio:16/9; box-shadow:0 6px 22px rgba(90,48,24,.13); }
+.ins-img img { width:100%; height:100%; object-fit:cover; display:block; }
 
-/* ═══ КАРУСЕЛЬ — бесконечная вправо через клонирование ═══ */
-#gallery{background:linear-gradient(160deg,var(--pale-peach) 0%,var(--pale-yellow) 100%)}
-.carousel-wrap{user-select:none;position:relative;overflow:hidden;border-radius:18px;box-shadow:0 8px 28px rgba(90,48,24,.13);background:#2a1a08;aspect-ratio:4/3;max-height:360px;max-width:640px;margin:0 auto;width:100%}
-.carousel-track{display:flex;height:100%;will-change:transform;width:100%}
-.carousel-track.animated{transition:transform .55s cubic-bezier(.77,0,.18,1)}
-.carousel-slide{width:100%;min-width:100%;max-width:100%;height:100%;position:relative;overflow:hidden;flex:0 0 100%;flex-shrink:0}
-.carousel-slide img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-.carousel-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--pale-peach),var(--pale-yellow));gap:12px}
-.ph-icon{font-size:3rem;opacity:.4}
-.ph-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--text-soft);opacity:.5;text-align:center;padding:0 24px}
-.carousel-slide::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(42,26,8,.5),transparent);pointer-events:none}
-.slide-caption{position:absolute;bottom:18px;left:24px;right:24px;z-index:2;font-family:'Cormorant Garamond',serif;font-size:clamp(0.85rem,1.4vw,1.05rem);font-style:italic;color:rgba(255,255,255,.9);line-height:1.4;text-shadow:0 2px 6px rgba(0,0,0,.3)}
-.carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);backdrop-filter:blur(8px);color:white;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.carousel-arrow:hover{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.8);transform:translateY(-50%) scale(1.07)}
-.carousel-arrow.prev{left:14px} .carousel-arrow.next{right:14px}
-.carousel-dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
-.carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(90,48,24,.2);cursor:pointer;transition:all .3s;border:none;padding:0}
-.carousel-dot.active{background:var(--dusty-rose);transform:scale(1.3);box-shadow:0 2px 6px rgba(196,135,122,.5)}
-.carousel-counter{text-align:center;margin-top:8px;font-family:'Cormorant Garamond',serif;font-size:clamp(0.8rem,1.2vw,0.95rem);font-style:italic;color:var(--text-soft);opacity:.7}
+/* мобильный аккордеон */
+.ins-acc-hd { display:none; }
 
-/* ═══ FOOTER ═══ */
-footer{background:#eeddd3;text-align:center;padding:40px 24px 32px;position:relative;overflow:hidden}
-.footer-inner{position:relative;z-index:1}
-/* Логотип внутри белого кружка — виден на любом фоне */
-.footer-logo{width:clamp(90px,13vw,130px);margin:0 auto 16px;display:block;animation:logoFloat 4s ease-in-out infinite;animation-delay:.5s}
-footer h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3.2vw,2.6rem);font-weight:900;color:var(--warm-brown);margin-bottom:8px;line-height:1.1}
-footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95rem,1.6vw,1.15rem);color:var(--text-soft);max-width:400px;margin:0 auto 22px;line-height:1.6}
-.tg-btn{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--warm-brown);border:2px solid rgba(90,48,24,.3);border-radius:60px;padding:14px 40px;font-family:'Playfair Display',serif;font-size:clamp(0.9rem,1.4vw,1.05rem);font-style:italic;cursor:pointer;transition:all .3s ease;text-decoration:none;margin-bottom:8px}
-.tg-btn:hover{background:var(--warm-brown);color:var(--cream);border-color:var(--warm-brown);box-shadow:0 8px 28px rgba(90,48,24,.18);transform:translateY(-2px)}
-.tg-btn:active{transform:scale(.97)}
-.tg-btn svg{width:18px;height:18px;flex-shrink:0;opacity:.7;transition:opacity .3s}
-.tg-btn:hover svg{opacity:1}
-.tg-hint{display:block;font-family:'Cormorant Garamond',serif;font-size:clamp(0.78rem,1.1vw,0.9rem);color:var(--text-soft);opacity:.45;margin-bottom:18px;letter-spacing:.5px}
-.cta-btn{display:inline-block;background:transparent;color:var(--warm-brown);border:2px solid rgba(90,48,24,.3);border-radius:60px;padding:12px 36px;font-family:'Playfair Display',serif;font-size:clamp(0.9rem,1.4vw,1.05rem);font-style:italic;cursor:pointer;transition:all .3s ease}
-.cta-btn:hover{background:var(--warm-brown);color:var(--cream);border-color:var(--warm-brown);transform:translateY(-2px)}
-.cta-btn.pop{animation:btnPop .35s ease}
-@keyframes btnPop{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
-.footer-star{margin-top:18px;font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--text-soft);opacity:.35;letter-spacing:3px;text-transform:uppercase}
-
-/* ═══ REVEAL ═══ */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.fw-piece{position:fixed;pointer-events:none;z-index:9999}
-.cursor-sparkle{position:fixed;pointer-events:none;z-index:9998}
-
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:860px){
-  .inside-acc-body{grid-template-columns:1fr}
-  .inside-illus{aspect-ratio:16/9;max-height:none}
-}
 @media(max-width:680px){
-  .section-inner{padding:28px 18px}
-  .forwhom-grid{grid-template-columns:1fr}
-  .atmo-quotes{grid-template-columns:1fr}
-  .tab-bar{display:none}
-  .tab-bar-mobile{display:flex}
-  .tab-panel-wrap{border-radius:16px;padding:18px}
-}
-@media(max-width:480px){
-  .tg-btn{padding:13px 28px}
-  .carousel-arrow{width:36px;height:36px;font-size:1rem}
-  .carousel-arrow.prev{left:8px} .carousel-arrow.next{right:8px}
-  footer{padding:32px 16px 24px}
+  .ins-btns { display:none; }
+  .ins-panel { display:block; margin-bottom:6px; }
+  .ins-acc-hd {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:13px 16px; border-radius:12px; cursor:pointer;
+    font-family:'Playfair Display',serif; font-size:.95rem; font-weight:700;
+    color:var(--text-soft); background:rgba(255,255,255,.65);
+    border:1.5px solid rgba(90,48,24,.12); transition:all .2s; user-select:none;
+  }
+  .ins-panel.active .ins-acc-hd { color:var(--warm-brown); background:#fff; border-color:var(--dusty-rose); border-radius:12px 12px 0 0; }
+  .ins-arr { font-size:.9rem; opacity:.5; transition:transform .28s; }
+  .ins-panel.active .ins-arr { transform:rotate(180deg); opacity:1; }
+  .ins-body { display:none !important; }
+  .ins-panel.active .ins-body { display:block !important; background:#fff; border:1.5px solid var(--dusty-rose); border-top:none; border-radius:0 0 12px 12px; padding:16px; }
+  .ins-panel.active .ins-img { aspect-ratio:16/9; width:100%; margin-top:12px; }
 }
 
-/* ── МОБИЛЬНЫЙ АККОРДЕОН для "Что внутри" ── */
-@media(max-width:680px){
-  .inside-cards{display:none}
-  .inside-panels-wrap { min-height:0; }
-  .inside-panel{display:block !important; opacity:1 !important; position:static !important; margin-bottom:8px}
-  .inside-acc-header{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:14px 18px;border-radius:14px;cursor:pointer;
-    font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
-    color:var(--text-soft);background:rgba(255,255,255,.6);
-    border:1.5px solid rgba(90,48,24,.12);transition:all .25s;
-    user-select:none;
-  }
-  .inside-panel.active .inside-acc-header{
-    color:var(--warm-brown);background:white;
-    border-color:var(--dusty-rose);border-radius:14px 14px 0 0;
-  }
-  .inside-acc-arrow{font-size:1rem;transition:transform .3s ease;opacity:.5;}
-  .inside-panel.active .inside-acc-arrow{transform:rotate(180deg);opacity:1;}
-  .inside-acc-body{
-    display:none !important;
-  }
-  .inside-panel.active .inside-acc-body{
-    display:block !important;
-    background:white;border:1.5px solid var(--dusty-rose);
-    border-top:none;border-radius:0 0 14px 14px;
-    padding:16px;
-    grid-template-columns:1fr;
-  }
-  .inside-panel.active .inside-illus{
-    aspect-ratio:16/9;width:100%;margin-top:12px;
-  }
-  .inside-big-text{font-size:1.2rem!important}
-  .inside-desc{font-size:0.95rem!important}
+/* ── ДЛЯ КОГО ── */
+#forwhom { background:linear-gradient(155deg,var(--pale-yellow),var(--pale-peach)); }
+.fw-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media(max-width:680px){ .fw-grid { grid-template-columns:1fr; } }
+
+.fw-card { background:rgba(255,255,255,.72); border-radius:22px; padding:22px 24px; border:1.5px solid rgba(255,255,255,.9); box-shadow:0 6px 26px rgba(90,48,24,.07); }
+.fw-card h3 { font-family:'Playfair Display',serif; font-size:clamp(1.1rem,1.9vw,1.55rem); font-weight:700; color:var(--warm-brown); margin-bottom:10px; }
+.fw-card ul { list-style:none; }
+.fw-card li { font-size:clamp(.88rem,1.4vw,1.1rem); color:var(--text-soft); padding:6px 0; display:flex; gap:9px; align-items:flex-start; line-height:1.5; border-bottom:1px solid rgba(90,48,24,.07); }
+.fw-card li:last-child { border-bottom:none; }
+.fw-card li::before { content:'✦'; color:var(--dusty-rose); font-size:.75em; flex-shrink:0; margin-top:4px; }
+.fw-together { grid-column:1/-1; background:linear-gradient(135deg,#c4a882,#b8956e); border-radius:22px; padding:22px 32px; text-align:center; box-shadow:0 8px 30px rgba(90,48,24,.15); }
+.fw-together p { font-family:'Playfair Display',serif; font-size:clamp(1.1rem,2.2vw,1.75rem); font-style:italic; color:#fff; line-height:1.4; }
+
+/* ── АТМОСФЕРА ── */
+#atmosphere { background:#fff8f2; }
+.atmo-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:22px; }
+@media(max-width:680px){ .atmo-grid { grid-template-columns:1fr; } }
+
+.atmo-q { background:rgba(255,255,255,.82); border-radius:18px; padding:20px; border:1.5px solid rgba(90,48,24,.08); box-shadow:0 3px 14px rgba(90,48,24,.05); transition:transform .28s, box-shadow .28s; }
+.atmo-q:hover { transform:translateY(-5px); box-shadow:0 12px 36px rgba(90,48,24,.1); }
+.atmo-q-ico  { font-size:1.9rem; margin-bottom:6px; display:block; }
+.atmo-q-text { font-family:'Playfair Display',serif; font-size:clamp(1rem,1.9vw,1.5rem); font-style:italic; color:var(--warm-brown); line-height:1.3; }
+.atmo-final  { border-left:3px solid var(--dusty-rose); padding:14px 22px; font-size:clamp(.9rem,1.5vw,1.2rem); color:var(--text-soft); font-style:italic; line-height:1.65; }
+
+/* ── КАРУСЕЛЬ ── */
+#gallery { background:linear-gradient(155deg,var(--pale-peach),var(--pale-yellow)); }
+
+.c-outer {
+  position:relative; border-radius:16px; overflow:hidden; background:#2a1a08;
+  aspect-ratio:4/3; max-height:360px; max-width:640px; margin:0 auto; width:100%;
+  user-select:none; cursor:grab; touch-action:pan-y;
 }
+.c-outer:active { cursor:grabbing; }
+.c-track { display:flex; height:100%; will-change:transform; }
+.c-track.anim { transition:transform .52s cubic-bezier(.77,0,.18,1); }
+.c-slide { flex:0 0 100%; min-width:100%; height:100%; position:relative; overflow:hidden; }
+.c-slide img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
+.c-slide::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(42,26,8,.5) 0%,transparent 50%); pointer-events:none; }
+.c-cap { position:absolute; bottom:16px; left:20px; right:20px; z-index:2; font-family:'Cormorant Garamond',serif; font-size:clamp(.82rem,1.3vw,1rem); font-style:italic; color:rgba(255,255,255,.9); line-height:1.4; text-shadow:0 1px 5px rgba(0,0,0,.35); }
+
+.c-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:10; width:42px; height:42px; border-radius:50%; border:1.5px solid rgba(255,255,255,.5); background:rgba(255,255,255,.15); backdrop-filter:blur(8px); color:#fff; font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s, border-color .2s, transform .2s; }
+.c-arrow:hover { background:rgba(255,255,255,.3); border-color:rgba(255,255,255,.8); transform:translateY(-50%) scale(1.07); }
+.c-arrow.prev { left:12px; }
+.c-arrow.next { right:12px; }
+@media(max-width:480px){ .c-arrow{width:34px;height:34px;font-size:1rem} .c-arrow.prev{left:7px} .c-arrow.next{right:7px} }
+
+.c-dots { display:flex; justify-content:center; gap:8px; margin-top:14px; }
+.c-dot { width:8px; height:8px; border-radius:50%; background:rgba(90,48,24,.2); border:none; padding:0; cursor:pointer; transition:background .25s, transform .25s; }
+.c-dot.active { background:var(--dusty-rose); transform:scale(1.35); box-shadow:0 2px 6px rgba(196,135,122,.5); }
+.c-counter { text-align:center; margin-top:7px; font-family:'Cormorant Garamond',serif; font-size:clamp(.78rem,1.1vw,.92rem); font-style:italic; color:var(--text-soft); opacity:.65; }
+
+/* ── ФУТЕР ── */
+footer { background:var(--pale-peach); text-align:center; padding:44px 24px 36px; position:relative; overflow:hidden; }
+footer::before { content:'✦'; position:absolute; font-size:14rem; color:rgba(90,48,24,.04); top:-30px; right:-20px; line-height:1; pointer-events:none; }
+.footer-logo { width:clamp(80px,12vw,120px); margin:0 auto 16px; display:block; animation:logoFloat 4s ease-in-out .5s infinite; }
+footer h2 { font-family:'Playfair Display',serif; font-size:clamp(1.4rem,3vw,2.4rem); font-weight:900; color:var(--warm-brown); margin-bottom:8px; line-height:1.1; }
+.footer-sub { font-family:'Cormorant Garamond',serif; font-size:clamp(.9rem,1.5vw,1.15rem); font-style:italic; color:var(--text-soft); max-width:480px; margin:0 auto 22px; line-height:1.55; }
+
+.tg-btn { display:inline-flex; align-items:center; gap:10px; background:transparent; color:var(--warm-brown); border:2px solid rgba(90,48,24,.3); border-radius:60px; padding:13px 36px; font-family:'Playfair Display',serif; font-size:clamp(.88rem,1.3vw,1rem); font-style:italic; cursor:pointer; transition:all .28s; text-decoration:none; margin-bottom:8px; }
+.tg-btn svg { width:17px; height:17px; flex-shrink:0; opacity:.7; transition:opacity .2s; }
+.tg-btn:hover { background:var(--warm-brown); color:var(--cream); border-color:var(--warm-brown); transform:translateY(-2px); box-shadow:0 8px 26px rgba(90,48,24,.18); }
+.tg-btn:hover svg { opacity:1; }
+.tg-hint { display:block; font-size:clamp(.76rem,1vw,.88rem); color:var(--text-soft); opacity:.45; margin-bottom:18px; letter-spacing:.5px; }
+.cta-btn { display:inline-block; background:transparent; color:var(--warm-brown); border:2px solid rgba(90,48,24,.3); border-radius:60px; padding:11px 32px; font-family:'Playfair Display',serif; font-size:clamp(.88rem,1.3vw,1rem); font-style:italic; cursor:pointer; transition:all .28s; }
+.cta-btn:hover { background:var(--warm-brown); color:var(--cream); border-color:var(--warm-brown); transform:translateY(-2px); }
+.cta-btn.pop { animation:btnPop .32s ease; }
+@keyframes btnPop { 0%{transform:scale(1)} 40%{transform:scale(1.12)} 100%{transform:scale(1)} }
+.footer-star { margin-top:18px; font-size:.76rem; color:var(--text-soft); opacity:.32; letter-spacing:3px; text-transform:uppercase; }
+
+.fw-piece { position:fixed; pointer-events:none; z-index:9999; }
+.sparkle  { position:fixed; pointer-events:none; z-index:9998; }
 </style>
 </head>
 <body>
 
 <nav id="main-nav">
-  <!-- Десктоп -->
   <div class="nav-desktop">
-    <a href="#hero"       class="nav-tab active" data-section="hero">Главная</a>
-    <a href="#history"    class="nav-tab"        data-section="history">История</a>
-    <a href="#inside"     class="nav-tab"        data-section="inside">Что внутри</a>
-    <a href="#forwhom"    class="nav-tab"        data-section="forwhom">Для кого</a>
-    <a href="#atmosphere" class="nav-tab"        data-section="atmosphere">Атмосфера</a>
-    <a href="#gallery"    class="nav-tab"        data-section="gallery">Как это было</a>
+    <a href="#hero"       class="nav-tab active" data-s="hero">Главная</a>
+    <a href="#history"    class="nav-tab"        data-s="history">История</a>
+    <a href="#inside"     class="nav-tab"        data-s="inside">Что внутри</a>
+    <a href="#forwhom"    class="nav-tab"        data-s="forwhom">Для кого</a>
+    <a href="#atmosphere" class="nav-tab"        data-s="atmosphere">Атмосфера</a>
+    <a href="#gallery"    class="nav-tab"        data-s="gallery">Как это было</a>
   </div>
-  <!-- Мобильный бургер -->
   <div class="nav-mobile">
-    <a class="nav-mobile-brand" href="#hero">
+    <a class="nav-brand" href="#hero">
       <img src="маринадик.png" alt="МариНадик" onerror="this.style.display='none'">
       МариНадик
     </a>
-    <button class="burger-btn" id="burgerBtn" aria-label="Меню">
-      <span class="burger-icon">
-        <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect y="0" width="22" height="2.5" rx="1.25" fill="#5a3018"/>
-          <rect y="6.75" width="22" height="2.5" rx="1.25" fill="#5a3018"/>
-          <rect y="13.5" width="22" height="2.5" rx="1.25" fill="#5a3018"/>
-        </svg>
-      </span>
-      <span class="close-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="1" y1="1" x2="17" y2="17" stroke="#5a3018" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="17" y1="1" x2="1" y2="17" stroke="#5a3018" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-      </span>
+    <button id="burgerBtn" aria-label="Меню">
+      <svg class="ic-burger" width="22" height="16" viewBox="0 0 22 16" fill="none">
+        <rect y="0"    width="22" height="2.5" rx="1.25" fill="#5a3018"/>
+        <rect y="6.75" width="22" height="2.5" rx="1.25" fill="#5a3018"/>
+        <rect y="13.5" width="22" height="2.5" rx="1.25" fill="#5a3018"/>
+      </svg>
+      <svg class="ic-close" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <line x1="1" y1="1" x2="17" y2="17" stroke="#5a3018" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="17" y1="1" x2="1"  y2="17" stroke="#5a3018" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
     </button>
   </div>
 </nav>
 
-<!-- Мобильное меню -->
-<nav class="mobile-menu" id="mobileMenu">
-  <a href="#hero"       data-section="hero"><span class="m-icon">✦</span>Главная</a>
-  <a href="#history"    data-section="history"><span class="m-icon">📖</span>История</a>
-  <a href="#inside"     data-section="inside"><span class="m-icon">✨</span>Что внутри</a>
-  <a href="#forwhom"    data-section="forwhom"><span class="m-icon">❤️</span>Для кого</a>
-  <a href="#atmosphere" data-section="atmosphere"><span class="m-icon">🌿</span>Атмосфера</a>
-  <a href="#gallery"    data-section="gallery"><span class="m-icon">📸</span>Как это было</a>
+<nav id="mobileMenu">
+  <a href="#hero"       data-s="hero"><span class="ico">✦</span>Главная</a>
+  <a href="#history"    data-s="history"><span class="ico">📖</span>История</a>
+  <a href="#inside"     data-s="inside"><span class="ico">✨</span>Что внутри</a>
+  <a href="#forwhom"    data-s="forwhom"><span class="ico">❤️</span>Для кого</a>
+  <a href="#atmosphere" data-s="atmosphere"><span class="ico">🌿</span>Атмосфера</a>
+  <a href="#gallery"    data-s="gallery"><span class="ico">📸</span>Как это было</a>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
-  <div class="wc-blob hero-blob-1"></div>
-  <div class="wc-blob hero-blob-2"></div>
-  <div class="wc-blob hero-blob-3"></div>
-  <div class="wc-blob hero-blob-4"></div>
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="blob b3"></div><div class="blob b4"></div>
   <div class="hero-logo-wrap">
     <img class="hero-logo" src="маринадик.png" alt="МариНадик" onerror="this.style.opacity='0'">
   </div>
@@ -434,26 +387,21 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
   <p class="hero-sub">Тёплое пространство хороших детско-семейных встреч</p>
 </section>
 
-<!-- ИСТОРИЯ -->
 <section id="history">
-  <div class="section-inner">
-    <p class="section-eyebrow reveal">Знакомство</p>
-    <h2 class="section-title reveal">История <em>МариНадика</em></h2>
-    <div class="section-rule reveal" style="background:var(--soft-blue)"></div>
-
-    <!-- Десктоп: классические вкладки -->
-    <div class="tab-bar reveal">
-      <button class="tab-btn active" data-tab="character">Кто такой МариНадик</button>
-      <button class="tab-btn"        data-tab="timeline">История проекта</button>
+  <div class="si">
+    <p class="eyebrow rv">Знакомство</p>
+    <h2 class="sec-title rv">История <em>МариНадика</em></h2>
+    <div class="sec-rule rv" style="background:var(--soft-blue)"></div>
+    <div class="tab-bar rv">
+      <button class="tab-btn active" data-tab="char">Кто такой МариНадик</button>
+      <button class="tab-btn"        data-tab="tl">История проекта</button>
     </div>
-    <!-- Мобильный: сегментный переключатель -->
-    <div class="tab-bar-mobile reveal">
-      <button class="tab-btn-mobile active" data-tab="character">Кто такой</button>
-      <button class="tab-btn-mobile"        data-tab="timeline">История</button>
+    <div class="tab-seg rv">
+      <button class="tab-seg-btn active" data-tab="char">Кто такой</button>
+      <button class="tab-seg-btn"        data-tab="tl">История</button>
     </div>
-
-    <div class="tab-panel-wrap reveal">
-      <div class="tab-panel active" id="tab-character">
+    <div class="tab-wrap rv">
+      <div class="tab-panel active" id="tab-char">
         <div class="trait-grid">
           <div class="trait-card"><h4>Читатель</h4><p>Прежде всего — читатель. Хорошая детская книга — это портал во множество миров не только для детей, но и для взрослых.</p></div>
           <div class="trait-card"><h4>Путешественник</h4><p>Опытный и страстный путешественник по книжным мирам. Много где уже побывал — и ещё больше мест, куда хочет попасть.</p></div>
@@ -465,471 +413,339 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
           <div class="trait-card"><h4>Мастер на все руки</h4><p>Всё умеет. Может смастерить цветок времени, а может и борщ сварить. И конечно, всему этому он может научить детей.</p></div>
         </div>
       </div>
-      <div class="tab-panel" id="tab-timeline">
+      <div class="tab-panel" id="tab-tl">
         <div class="timeline">
-          <div class="tl-item"><div class="tl-dot rose">✦</div><div class="tl-content"><h4>Рождение проекта</h4><p>МариНадик появился как живое пространство встреч — где дети и взрослые вместе читали книги, играли, мастерили и открывали мир. Без официоза, без скуки. Только настоящее.</p></div></div>
-          <div class="tl-item"><div class="tl-dot blue">✦</div><div class="tl-content"><h4>Жизнь и развитие</h4><p>Встречи в кафе, театрах, парках и домах. Экскурсии, мастер-классы, театральные постановки. Зум-встречи. Дни рождения, концерты, прогулки по городу. Проект жил полной жизнью.</p></div></div>
-          <div class="tl-item"><div class="tl-dot gold">✦</div><div class="tl-content"><h4>Пауза</h4><p>Как бывает с живыми делами — проект взял паузу. Но пространство, которое однажды наполнили теплом, не исчезает. Оно ждёт.</p></div></div>
-          <div class="tl-item"><div class="tl-dot rose">✦</div><div class="tl-content"><h4>Возвращение</h4><p>Это не старт с нуля — это продолжение истории. МариНадик возвращается благодаря людям, которым важно делать хорошее дело. И в нём снова будут хорошие встречи.</p></div></div>
+          <div class="tl-row"><div class="tl-dot rose">✦</div><div class="tl-text"><h4>Рождение проекта</h4><p>МариНадик появился как живое пространство встреч — где дети и взрослые вместе читали книги, играли, мастерили и открывали мир. Без официоза, без скуки. Только настоящее.</p></div></div>
+          <div class="tl-row"><div class="tl-dot blue">✦</div><div class="tl-text"><h4>Жизнь и развитие</h4><p>Встречи в кафе, театрах, парках и домах. Экскурсии, мастер-классы, театральные постановки. Зум-встречи. Дни рождения, концерты, прогулки по городу. Проект жил полной жизнью.</p></div></div>
+          <div class="tl-row"><div class="tl-dot gold">✦</div><div class="tl-text"><h4>Пауза</h4><p>Как бывает с живыми делами — проект взял паузу. Но пространство, которое однажды наполнили теплом, не исчезает. Оно ждёт.</p></div></div>
+          <div class="tl-row"><div class="tl-dot rose">✦</div><div class="tl-text"><h4>Возвращение</h4><p>Это не старт с нуля — это продолжение истории. МариНадик возвращается благодаря людям, которым важно делать хорошее дело. И в нём снова будут хорошие встречи.</p></div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ЧТО ВНУТРИ -->
 <section id="inside">
-  <div class="section-inner">
-    <p class="section-eyebrow reveal">Программа встреч</p>
-    <h2 class="section-title reveal">Что <em>спрятано</em> внутри</h2>
-    <div class="section-rule reveal"></div>
-
-    <!-- 4 одинаковые карточки-кнопки -->
-    <div class="inside-cards reveal">
-      <button class="inside-card-btn active"      data-inside="theatre">Театр<div class="inside-card-dot"></div></button>
-      <button class="inside-card-btn blue"        data-inside="books">Книги<div class="inside-card-dot"></div></button>
-      <button class="inside-card-btn gold"        data-inside="trips">Экскурсии<div class="inside-card-dot"></div></button>
-      <button class="inside-card-btn sage"        data-inside="craft">Творчество<div class="inside-card-dot"></div></button>
-      <button class="inside-card-btn mint"       data-inside="walks">Прогулки<div class="inside-card-dot"></div></button>
+  <div class="si">
+    <p class="eyebrow rv">Программа встреч</p>
+    <h2 class="sec-title rv">Что <em>спрятано</em> внутри</h2>
+    <div class="sec-rule rv"></div>
+    <div class="ins-btns rv">
+      <button class="ins-btn active"     data-ins="theatre">Театр<div class="ins-dot"></div></button>
+      <button class="ins-btn blue"       data-ins="books">Книги<div class="ins-dot"></div></button>
+      <button class="ins-btn gold"       data-ins="trips">Экскурсии<div class="ins-dot"></div></button>
+      <button class="ins-btn sage"       data-ins="craft">Творчество<div class="ins-dot"></div></button>
+      <button class="ins-btn"            data-ins="walks">Прогулки<div class="ins-dot"></div></button>
     </div>
-
-    <div class="inside-panels-wrap">
-    <div class="inside-panel active" id="inside-theatre">
-      <div class="inside-acc-header" data-inside="theatre"><span>Театр</span><span class="inside-acc-arrow">▾</span></div>
-      <div class="inside-acc-body">
-        <div class="inside-text">
-          <p class="inside-big-text">Игра и театр — живые эмоции и перевоплощения</p>
-          <p class="inside-desc">Небольшие театральные постановки, сторителлинг, ролевые игры. Смотрим, участвуем, переживаем вместе. Театр здесь — не спектакль «для галочки», а живое приключение, в котором каждый может стать героем истории.</p>
-        </div>
-        <div class="inside-illus">
-          <img src="Frame%201.png" alt="Театр" onerror="this.parentElement.style.background='var(--pale-peach)'">
-        </div>
-      </div>
+    <div id="ins-theatre" class="ins-panel active">
+      <div class="ins-acc-hd" data-ins="theatre"><span>Театр</span><span class="ins-arr">▾</span></div>
+      <div class="ins-body"><div><p class="ins-big">Игра и театр — живые эмоции и перевоплощения</p><p class="ins-desc">Небольшие театральные постановки, сторителлинг, ролевые игры. Смотрим, участвуем, переживаем вместе. Театр здесь — не спектакль «для галочки», а живое приключение, в котором каждый может стать героем истории.</p></div><div class="ins-img"><img src="Frame%201.png" alt="Театр" onerror="this.parentElement.style.background='var(--pale-peach)'"></div></div>
     </div>
-    <div class="inside-panel" id="inside-books">
-      <div class="inside-acc-header" data-inside="books"><span>Книги</span><span class="inside-acc-arrow">▾</span></div>
-      <div class="inside-acc-body">
-        <div class="inside-text">
-          <p class="inside-big-text">Книги и смыслы — погружение в истории</p>
-          <p class="inside-desc">Читаем книгу полностью или частично, затем максимально погружаемся в её контекст через игру. Ребусы, загадки, квесты, задачки ТРИЗ, сочинительство. Прокладываем мостики к другим книгам и областям знаний.</p>
-        </div>
-        <div class="inside-illus">
-          <img src="Frame%202.png" alt="Книги" onerror="this.parentElement.style.background='var(--pale-blue)'">
-        </div>
-      </div>
+    <div id="ins-books" class="ins-panel">
+      <div class="ins-acc-hd" data-ins="books"><span>Книги</span><span class="ins-arr">▾</span></div>
+      <div class="ins-body"><div><p class="ins-big">Книги и смыслы — погружение в истории</p><p class="ins-desc">Читаем книгу полностью или частично, затем максимально погружаемся в её контекст через игру. Ребусы, загадки, квесты, задачки ТРИЗ, сочинительство. Прокладываем мостики к другим книгам и областям знаний.</p></div><div class="ins-img"><img src="Frame%202.png" alt="Книги" onerror="this.parentElement.style.background='var(--pale-blue)'"></div></div>
     </div>
-    <div class="inside-panel" id="inside-trips">
-      <div class="inside-acc-header" data-inside="trips"><span>Экскурсии</span><span class="inside-acc-arrow">▾</span></div>
-      <div class="inside-acc-body">
-        <div class="inside-text">
-          <p class="inside-big-text">Экскурсии и прогулки — познание мира вместе</p>
-          <p class="inside-desc">Гуляем и исследуем вместе. Консерватория и КЗЧ, городские площадки, парки и леса, другие города. Совместное познание мира и честные ответы на детские вопросы — без упрощений.</p>
-        </div>
-        <div class="inside-illus">
-          <img src="Frame%205.png" alt="Экскурсии" onerror="this.parentElement.style.background='var(--pale-yellow)'">
-        </div>
-      </div>
+    <div id="ins-trips" class="ins-panel">
+      <div class="ins-acc-hd" data-ins="trips"><span>Экскурсии</span><span class="ins-arr">▾</span></div>
+      <div class="ins-body"><div><p class="ins-big">Экскурсии и прогулки — познание мира вместе</p><p class="ins-desc">Гуляем и исследуем вместе. Консерватория и КЗЧ, городские площадки, парки и леса, другие города. Совместное познание мира и честные ответы на детские вопросы — без упрощений.</p></div><div class="ins-img"><img src="Frame%205.png" alt="Экскурсии" onerror="this.parentElement.style.background='var(--pale-yellow)'"></div></div>
     </div>
-    <div class="inside-panel" id="inside-craft">
-      <div class="inside-acc-header" data-inside="craft"><span>Творчество</span><span class="inside-acc-arrow">▾</span></div>
-      <div class="inside-acc-body">
-        <div class="inside-text">
-          <p class="inside-big-text">Творчество и мастер-классы — делаем руками</p>
-          <p class="inside-desc">Обязательно что-нибудь делаем руками. Мастерим, рисуем, лепим или даже готовим бутерброды. Творчество здесь — не урок рисования, а способ остаться внутри истории и унести её домой.</p>
-        </div>
-        <div class="inside-illus">
-          <img src="Frame%204.png" alt="Творчество" onerror="this.parentElement.style.background='#d4e8cc'">
-        </div>
-      </div>
+    <div id="ins-craft" class="ins-panel">
+      <div class="ins-acc-hd" data-ins="craft"><span>Творчество</span><span class="ins-arr">▾</span></div>
+      <div class="ins-body"><div><p class="ins-big">Творчество и мастер-классы — делаем руками</p><p class="ins-desc">Обязательно что-нибудь делаем руками. Мастерим, рисуем, лепим или даже готовим бутерброды. Творчество здесь — не урок рисования, а способ остаться внутри истории и унести её домой.</p></div><div class="ins-img"><img src="Frame%204.png" alt="Творчество" onerror="this.parentElement.style.background='#d4e8cc'"></div></div>
     </div>
-    <div class="inside-panel" id="inside-walks">
-      <div class="inside-acc-header" data-inside="walks"><span>Прогулки</span><span class="inside-acc-arrow">▾</span></div>
-      <div class="inside-acc-body">
-        <div class="inside-text">
-          <p class="inside-big-text">Прогулки — город как открытая книга</p>
-          <p class="inside-desc">Гуляем и смотрим вокруг внимательно. Парки, дворы, набережные, переулки. Замечаем то, что обычно проходит мимо — архитектуру, природу, людей, детали. Город становится живым и понятным, если уметь его читать.</p>
-        </div>
-        <div class="inside-illus">
-          <img src="Frame%206.png" alt="Прогулки" onerror="this.parentElement.style.background='var(--pale-blue)'">
-        </div>
-      </div>
-    </div>
+    <div id="ins-walks" class="ins-panel">
+      <div class="ins-acc-hd" data-ins="walks"><span>Прогулки</span><span class="ins-arr">▾</span></div>
+      <div class="ins-body"><div><p class="ins-big">Прогулки — город как открытая книга</p><p class="ins-desc">Гуляем и смотрим вокруг внимательно. Парки, дворы, набережные, переулки. Замечаем то, что обычно проходит мимо — архитектуру, природу, людей, детали. Город становится живым и понятным, если уметь его читать.</p></div><div class="ins-img"><img src="Frame%206.png" alt="Прогулки" onerror="this.parentElement.style.background='var(--pale-blue)'"></div></div>
     </div>
   </div>
 </section>
 
-<!-- ДЛЯ КОГО -->
 <section id="forwhom">
-  <div class="section-inner">
-    <p class="section-eyebrow reveal">Приглашаем</p>
-    <h2 class="section-title reveal">Пространство, где <em>хорошо</em> всем</h2>
-    <div class="section-rule reveal"></div>
-    <div class="forwhom-grid">
-      <div class="forwhom-card reveal"><h3>✦ Для детей</h3><ul><li>Интересные и яркие открытия</li><li>Активная игра и живое творчество</li><li>Театр, книги, прогулки и мастер-классы</li><li>Энергия, фантазия и настоящие приключения</li></ul></div>
-      <div class="forwhom-card reveal" style="transition-delay:.1s"><h3>✦ Для взрослых</h3><ul><li>Спокойствие и понятность происходящего</li><li>Осмысленный диалог и доверие</li><li>Качественный культурный опыт рядом с ребёнком</li><li>Место, где интересно и вам тоже</li></ul></div>
-      <div class="forwhom-together reveal"><p>Место, где хочется быть рядом со своим ребёнком</p></div>
+  <div class="si">
+    <p class="eyebrow rv">Приглашаем</p>
+    <h2 class="sec-title rv">Пространство, где <em>хорошо</em> всем</h2>
+    <div class="sec-rule rv"></div>
+    <div class="fw-grid">
+      <div class="fw-card rv"><h3>✦ Для детей</h3><ul><li>Интересные и яркие открытия</li><li>Активная игра и живое творчество</li><li>Театр, книги, прогулки и мастер-классы</li><li>Энергия, фантазия и настоящие приключения</li></ul></div>
+      <div class="fw-card rv" style="transition-delay:.1s"><h3>✦ Для взрослых</h3><ul><li>Спокойствие и понятность происходящего</li><li>Осмысленный диалог и доверие</li><li>Качественный культурный опыт рядом с ребёнком</li><li>Место, где интересно и вам тоже</li></ul></div>
+      <div class="fw-together rv"><p>Место, где хочется быть рядом со своим ребёнком</p></div>
     </div>
   </div>
 </section>
 
-<!-- АТМОСФЕРА -->
 <section id="atmosphere">
-  <div class="section-inner">
-    <p class="section-eyebrow reveal">Ощущение</p>
-    <h2 class="section-title reveal"><em>Атмосфера,</em> которой можно доверять</h2>
-    <div class="section-rule reveal"></div>
-    <div class="atmo-quotes">
-      <div class="atmo-q reveal"><span class="atmo-q-icon">🧠</span><p class="atmo-q-text">Здесь умно и с душой</p></div>
-      <div class="atmo-q reveal" style="transition-delay:.08s"><span class="atmo-q-icon">❤️</span><p class="atmo-q-text">Здесь хочется быть вместе</p></div>
-      <div class="atmo-q reveal" style="transition-delay:.14s"><span class="atmo-q-icon">🌿</span><p class="atmo-q-text">Это тепло и по-настоящему</p></div>
-      <div class="atmo-q reveal" style="transition-delay:.2s"><span class="atmo-q-icon">🌟</span><p class="atmo-q-text">Здесь много хорошего</p></div>
+  <div class="si">
+    <p class="eyebrow rv">Ощущение</p>
+    <h2 class="sec-title rv"><em>Атмосфера,</em> которой можно доверять</h2>
+    <div class="sec-rule rv"></div>
+    <div class="atmo-grid">
+      <div class="atmo-q rv"><span class="atmo-q-ico">🧠</span><p class="atmo-q-text">Здесь умно и с душой</p></div>
+      <div class="atmo-q rv" style="transition-delay:.07s"><span class="atmo-q-ico">❤️</span><p class="atmo-q-text">Здесь хочется быть вместе</p></div>
+      <div class="atmo-q rv" style="transition-delay:.13s"><span class="atmo-q-ico">🌿</span><p class="atmo-q-text">Это тепло и по-настоящему</p></div>
+      <div class="atmo-q rv" style="transition-delay:.19s"><span class="atmo-q-ico">🌟</span><p class="atmo-q-text">Здесь много хорошего</p></div>
     </div>
-    <p class="atmo-final reveal">Мы не собираем заявки и не продаём место.<br>Мы просто хотим сказать: проект снова жив — и мы ждём вас.</p>
+    <p class="atmo-final rv">Мы не собираем заявки и не продаём место.<br>Мы просто хотим сказать: проект снова жив — и мы ждём вас.</p>
   </div>
 </section>
 
-<!-- КАРУСЕЛЬ -->
 <section id="gallery">
-  <div class="section-inner">
-    <p class="section-eyebrow reveal">Живые встречи</p>
-    <h2 class="section-title reveal">Как это <em>было</em></h2>
-    <div class="section-rule reveal" style="background:var(--warm-yellow)"></div>
-    <div class="reveal">
-      <div class="carousel-wrap" id="carousel">
-        <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-slide"><img src="photo1.jpg" alt="Фото 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo1.jpg</p></div><p class="slide-caption">Жёлтые МариНадики в шляпах — и рядом настольные игры</p></div>
-          <div class="carousel-slide"><img src="photo2.jpg" alt="Фото 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo2.jpg</p></div><p class="slide-caption">Сине-серые МариНадики с корабликами — морская тема</p></div>
-          <div class="carousel-slide"><img src="photo3.jpg" alt="Фото 3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo3.jpg</p></div><p class="slide-caption">Синий МариНадик с Шерлоком Холмсом — встреча детективов</p></div>
-          <div class="carousel-slide"><img src="photo4.jpg" alt="Фото 4" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo4.jpg</p></div><p class="slide-caption">МариНадики в мехе и коронах с самоцветами — королевская встреча!</p></div>
-          <div class="carousel-slide"><img src="photo5.jpg" alt="Фото 5" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo5.jpg</p></div><p class="slide-caption">Голубой МариНадик с шарфом и ракушками — встреча о море</p></div>
-          <div class="carousel-slide"><img src="photo6.jpg" alt="Фото 6" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo6.jpg</p></div><p class="slide-caption">Зелёные МариНадики с помпонами — лесная встреча</p></div>
-          <div class="carousel-slide"><img src="photo7.jpg" alt="Фото 7" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo7.jpg</p></div><p class="slide-caption">Красно-белые МариНадики-зайчики — целая армия праздника!</p></div>
-          <div class="carousel-slide"><img src="photo8.jpg" alt="Фото 8" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo8.jpg</p></div><p class="slide-caption">Фиолетовые МариНадики с мухоморами — встреча в лесу</p></div>
-          <div class="carousel-slide"><img src="photo9.jpg" alt="Фото 9" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo9.jpg</p></div><p class="slide-caption">МариНадик у стен Изумрудного города</p></div>
-          <div class="carousel-slide"><img src="photo10.jpg" alt="Фото 10" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="carousel-placeholder" style="display:none"><span class="ph-icon">📸</span><p class="ph-text">photo10.jpg</p></div><p class="slide-caption">МариНадики в бирюзовых шапках с яблоками — осенняя встреча</p></div>
+  <div class="si">
+    <p class="eyebrow rv">Живые встречи</p>
+    <h2 class="sec-title rv">Как это <em>было</em></h2>
+    <div class="sec-rule rv" style="background:var(--warm-yellow)"></div>
+    <div class="rv">
+      <div class="c-outer" id="cWrap">
+        <div class="c-track" id="cTrack">
+          <div class="c-slide"><img src="photo1.jpg"  alt="Фото 1"  onerror="this.style.display='none'"><p class="c-cap">Жёлтые МариНадики в шляпах — и рядом настольные игры</p></div>
+          <div class="c-slide"><img src="photo2.jpg"  alt="Фото 2"  onerror="this.style.display='none'"><p class="c-cap">Сине-серые МариНадики с корабликами — морская тема</p></div>
+          <div class="c-slide"><img src="photo3.jpg"  alt="Фото 3"  onerror="this.style.display='none'"><p class="c-cap">Синий МариНадик с Шерлоком Холмсом — встреча детективов</p></div>
+          <div class="c-slide"><img src="photo4.jpg"  alt="Фото 4"  onerror="this.style.display='none'"><p class="c-cap">МариНадики в мехе и коронах с самоцветами — королевская встреча!</p></div>
+          <div class="c-slide"><img src="photo5.jpg"  alt="Фото 5"  onerror="this.style.display='none'"><p class="c-cap">Голубой МариНадик с шарфом и ракушками — встреча о море</p></div>
+          <div class="c-slide"><img src="photo6.jpg"  alt="Фото 6"  onerror="this.style.display='none'"><p class="c-cap">Зелёные МариНадики с помпонами — лесная встреча</p></div>
+          <div class="c-slide"><img src="photo7.jpg"  alt="Фото 7"  onerror="this.style.display='none'"><p class="c-cap">Красно-белые МариНадики-зайчики — целая армия праздника!</p></div>
+          <div class="c-slide"><img src="photo8.jpg"  alt="Фото 8"  onerror="this.style.display='none'"><p class="c-cap">Фиолетовые МариНадики с мухоморами — встреча в лесу</p></div>
+          <div class="c-slide"><img src="photo9.jpg"  alt="Фото 9"  onerror="this.style.display='none'"><p class="c-cap">МариНадик у стен Изумрудного города</p></div>
+          <div class="c-slide"><img src="photo10.jpg" alt="Фото 10" onerror="this.style.display='none'"><p class="c-cap">МариНадики в бирюзовых шапках с яблоками — осенняя встреча</p></div>
         </div>
-        <button class="carousel-arrow prev" id="carouselPrev" aria-label="Назад">‹</button>
-        <button class="carousel-arrow next" id="carouselNext" aria-label="Вперёд">›</button>
+        <button class="c-arrow prev" id="cPrev" aria-label="Назад">‹</button>
+        <button class="c-arrow next" id="cNext" aria-label="Вперёд">›</button>
       </div>
-      <div class="carousel-dots" id="carouselDots"></div>
-      <p class="carousel-counter" id="carouselCounter">1 / 10</p>
+      <div class="c-dots"    id="cDots"></div>
+      <p   class="c-counter" id="cCounter">1 / 10</p>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer id="footer-cta">
-  <div class="footer-inner">
-    <img class="footer-logo" src="маринадик.png" alt="МариНадик" onerror="this.style.opacity='0'">
-    <h2>МариНадик возвращается</h2>
-    <p class="footer-sub">Инициатива неравнодушных людей, которые создают для детей и семей живые культурные встречи</p>
-    <a href="#" class="tg-btn" id="tgBtn" onclick="handleTg(event)">
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 14.482l-2.978-.924c-.647-.203-.66-.647.136-.958l11.627-4.485c.537-.194 1.006.131.517.133z"/></svg>
-      Следить за новостями в Telegram
-    </a>
-    <span class="tg-hint" id="tgHint">канал появится совсем скоро</span>
-    <br>
-    <button class="cta-btn" id="fireworksBtn">🎉 Отпраздновать возвращение!</button>
-    <p class="footer-star">✦ &nbsp; Продолжение истории &nbsp; ✦</p>
-  </div>
+  <img class="footer-logo" src="маринадик.png" alt="МариНадик" onerror="this.style.opacity='0'">
+  <h2>МариНадик возвращается</h2>
+  <p class="footer-sub">Инициатива неравнодушных людей, которые создают для детей и семей живые культурные встречи</p>
+  <a href="#" class="tg-btn" id="tgBtn">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 14.482l-2.978-.924c-.647-.203-.66-.647.136-.958l11.627-4.485c.537-.194 1.006.131.517.133z"/></svg>
+    Следить за новостями в Telegram
+  </a>
+  <span class="tg-hint" id="tgHint">канал появится совсем скоро</span><br>
+  <button class="cta-btn" id="fireworksBtn">🎉 Отпраздновать возвращение!</button>
+  <p class="footer-star">✦ &nbsp; Продолжение истории &nbsp; ✦</p>
 </footer>
 
 <script>
-/* ── LOGO LOAD ── */
-(function(){
-  var wrap = document.querySelector('.hero-logo-wrap');
-  var img  = document.querySelector('.hero-logo');
-  function revealLogo(){
-    wrap.style.animation = 'logoIn 1.0s cubic-bezier(.34,1.56,.64,1) both';
-    wrap.style.opacity   = '1';
-    setTimeout(function(){
-      img.style.animation = 'logoFloat 4s ease-in-out infinite';
-    }, 1050);
-  }
-  if(img.complete && img.naturalWidth > 0){
-    revealLogo();
-  } else {
-    img.addEventListener('load', revealLogo);
-    img.addEventListener('error', function(){ wrap.style.opacity='1'; });
-  }
-})();
+/* ── НАВ ── */
+const sections  = document.querySelectorAll('section[id], footer[id]');
+const navTabs   = document.querySelectorAll('.nav-tab');
+const menuLinks = document.querySelectorAll('#mobileMenu a');
 
-/* ── NAV SCROLL ── */
-const sections=document.querySelectorAll('section[id],footer[id]');
-const navTabs=document.querySelectorAll('.nav-tab');
-const menuLinks=document.querySelectorAll('.mobile-menu a');
-window.addEventListener('scroll',()=>{
-  let cur='hero';
-  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-130)cur=s.id;});
-  navTabs.forEach(t=>t.classList.toggle('active',t.dataset.section===cur));
-  menuLinks.forEach(t=>t.classList.toggle('active',t.dataset.section===cur));
-},{passive:true});
+window.addEventListener('scroll', () => {
+  let cur = 'hero';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 140) cur = s.id; });
+  navTabs.forEach(t   => t.classList.toggle('active', t.dataset.s === cur));
+  menuLinks.forEach(t => t.classList.toggle('active', t.dataset.s === cur));
+}, { passive: true });
 
 /* ── БУРГЕР ── */
-const burgerBtn=document.getElementById('burgerBtn');
-const mobileMenu=document.getElementById('mobileMenu');
-burgerBtn.addEventListener('click',()=>{
-  const open=burgerBtn.classList.toggle('open');
-  mobileMenu.classList.toggle('open',open);
-  document.body.style.overflow=open?'hidden':'';
+const burger = document.getElementById('burgerBtn');
+const mmenu  = document.getElementById('mobileMenu');
+
+burger.addEventListener('click', e => {
+  e.stopPropagation();
+  const open = burger.classList.toggle('open');
+  mmenu.classList.toggle('open', open);
 });
-menuLinks.forEach(link=>{
-  link.addEventListener('click',()=>{
-    burgerBtn.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow='';
-  });
-});
-document.addEventListener('click',e=>{
-  if(!burgerBtn.contains(e.target)&&!mobileMenu.contains(e.target)){
-    burgerBtn.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow='';
+
+menuLinks.forEach(l => l.addEventListener('click', () => {
+  burger.classList.remove('open');
+  mmenu.classList.remove('open');
+}));
+
+document.addEventListener('click', e => {
+  if (mmenu.classList.contains('open')
+      && !mmenu.contains(e.target)
+      && !burger.contains(e.target)) {
+    burger.classList.remove('open');
+    mmenu.classList.remove('open');
   }
 });
 
 /* ── REVEAL ── */
-const ro=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
-},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: .1 });
+document.querySelectorAll('.rv').forEach(el => ro.observe(el));
 
-/* ── HISTORY TABS (десктоп + мобильный) ── */
-function switchHistoryTab(tabId){
-  document.querySelectorAll('.tab-btn,.tab-btn-mobile').forEach(b=>b.classList.toggle('active',b.dataset.tab===tabId));
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+tabId));
+/* ── ИСТОРИЯ — вкладки ── */
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn, .tab-seg-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + id));
 }
-document.querySelectorAll('.tab-btn,.tab-btn-mobile').forEach(btn=>{
-  btn.addEventListener('click',()=>switchHistoryTab(btn.dataset.tab));
-});
+document.querySelectorAll('.tab-btn, .tab-seg-btn').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
 
-/* ── INSIDE CARDS ── */
-const insideSection=document.getElementById('inside');
-
-function switchInsidePanel(id){
-  document.querySelectorAll('.inside-card-btn').forEach(b=>b.classList.toggle('active',b.dataset.inside===id));
-  document.querySelectorAll('.inside-panel').forEach(p=>p.classList.toggle('active',p.id==='inside-'+id));
+/* ── ЧТО ВНУТРИ — десктоп ── */
+function switchIns(id) {
+  document.querySelectorAll('.ins-btn').forEach(b => b.classList.toggle('active', b.dataset.ins === id));
+  document.querySelectorAll('.ins-panel').forEach(p => p.classList.toggle('active', p.id === 'ins-' + id));
 }
+document.querySelectorAll('.ins-btn').forEach(b => b.addEventListener('click', () => switchIns(b.dataset.ins)));
 
-document.querySelectorAll('.inside-card-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    switchInsidePanel(btn.dataset.inside);
+/* ── ЧТО ВНУТРИ — мобильный аккордеон ── */
+document.querySelectorAll('.ins-acc-hd').forEach(hd => {
+  hd.addEventListener('click', () => {
+    const panel = document.getElementById('ins-' + hd.dataset.ins);
+    const was   = panel.classList.contains('active');
+    document.querySelectorAll('.ins-panel').forEach(p => p.classList.remove('active'));
+    if (!was) panel.classList.add('active');
   });
 });
 
-// Мобильный аккордеон
-document.querySelectorAll('.inside-acc-header').forEach(header=>{
-  header.addEventListener('click',()=>{
-    const id=header.dataset.inside;
-    const panel=document.getElementById('inside-'+id);
-    const isActive=panel.classList.contains('active');
-    // Закрываем все
-    document.querySelectorAll('.inside-panel').forEach(p=>p.classList.remove('active'));
-    // Открываем нажатый, если он не был активен
-    if(!isActive){
-      panel.classList.add('active');
-    }
-  });
-});
+/* ── КАРУСЕЛЬ ── */
+const cTrack = document.getElementById('cTrack');
+const cDots  = document.getElementById('cDots');
+const cCnt   = document.getElementById('cCounter');
+const cWrap  = document.getElementById('cWrap');
 
-/* ── КАРУСЕЛЬ — бесконечная прокрутка вправо ── */
-const track=document.getElementById('carouselTrack');
-const dotsWrap=document.getElementById('carouselDots');
-const counterEl=document.getElementById('carouselCounter');
-const cw=document.getElementById('carousel');
+const slides = Array.from(cTrack.querySelectorAll('.c-slide'));
+const TOTAL  = slides.length;
 
-// Собираем оригинальные слайды
-const origSlides=Array.from(track.querySelectorAll('.carousel-slide'));
-const TOTAL=origSlides.length;
+// клоны для бесконечности
+cTrack.appendChild(slides[0].cloneNode(true));
+cTrack.insertBefore(slides[TOTAL - 1].cloneNode(true), slides[0]);
 
-// Клонируем: в конец добавляем копию первого, в начало — копию последнего
-const cloneFirst=origSlides[0].cloneNode(true);
-const cloneLast=origSlides[TOTAL-1].cloneNode(true);
-track.appendChild(cloneFirst);
-track.insertBefore(cloneLast,origSlides[0]);
+let cur  = 1;
+let busy = false;
 
-// Позиция: реальный индекс смещён на 1 (из-за клона в начале)
-let cur=1; // начинаем с первого настоящего слайда (индекс 1)
-let isTransitioning=false;
-let startX=0, dragging=false;
-
-// Создаём точки (по числу оригинальных слайдов)
-for(let i=0;i<TOTAL;i++){
-  const d=document.createElement('button');
-  d.className='carousel-dot'+(i===0?' active':'');
-  d.setAttribute('aria-label','Фото '+(i+1));
-  d.addEventListener('click',()=>goTo(i+1));
-  dotsWrap.appendChild(d);
+for (let i = 0; i < TOTAL; i++) {
+  const d = document.createElement('button');
+  d.className = 'c-dot' + (i === 0 ? ' active' : '');
+  d.setAttribute('aria-label', 'Фото ' + (i + 1));
+  d.addEventListener('click', () => goTo(i + 1));
+  cDots.appendChild(d);
 }
 
-function updateDots(realIdx){
-  const dotIdx=(realIdx-1+TOTAL)%TOTAL;
-  document.querySelectorAll('.carousel-dot').forEach((d,i)=>d.classList.toggle('active',i===dotIdx));
-  counterEl.textContent=(dotIdx+1)+' / '+TOTAL;
+function updateUI(idx) {
+  const real = ((idx - 1) % TOTAL + TOTAL) % TOTAL;
+  document.querySelectorAll('.c-dot').forEach((d, i) => d.classList.toggle('active', i === real));
+  cCnt.textContent = (real + 1) + ' / ' + TOTAL;
 }
 
-function setPos(idx,animate){
-  const slideW=cw.offsetWidth;
-  if(animate){
-    track.classList.add('animated');
-  } else {
-    track.classList.remove('animated');
-  }
-  track.style.transform=`translateX(-${idx*slideW}px)`;
-  updateDots(idx);
+function setPos(idx, anim) {
+  cTrack.classList.toggle('anim', anim);
+  cTrack.style.transform = 'translateX(-' + (idx * cWrap.offsetWidth) + 'px)';
+  updateUI(idx);
 }
 
-// Инициализация без анимации
-setPos(cur,false);
+setPos(cur, false);
 
-function goTo(idx,animate=true){
-  if(isTransitioning&&animate)return;
-  cur=idx;
-  setPos(cur,animate);
-  if(animate)isTransitioning=true;
+function goTo(idx, anim = true) {
+  if (busy && anim) return;
+  cur = idx;
+  setPos(cur, anim);
+  if (anim) busy = true;
 }
 
-// После завершения анимации — тихо перепрыгиваем на реальный слайд если нужно
-track.addEventListener('transitionend',()=>{
-  isTransitioning=false;
-  if(cur===0){
-    // были на клоне последнего — прыгаем на настоящий последний
-    setPos(TOTAL,false);
-    cur=TOTAL;
-  } else if(cur===TOTAL+1){
-    // были на клоне первого — прыгаем на настоящий первый
-    setPos(1,false);
-    cur=1;
-  }
+cTrack.addEventListener('transitionend', () => {
+  busy = false;
+  if (cur === 0)           { setPos(TOTAL, false); cur = TOTAL; }
+  else if (cur === TOTAL + 1) { setPos(1, false); cur = 1; }
 });
 
-window.addEventListener('resize',()=>setPos(cur,false),{passive:true});
+window.addEventListener('resize', () => setPos(cur, false), { passive: true });
 
-document.getElementById('carouselPrev').addEventListener('click',()=>goTo(cur-1));
-document.getElementById('carouselNext').addEventListener('click',()=>goTo(cur+1));
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowLeft')goTo(cur-1);
-  if(e.key==='ArrowRight')goTo(cur+1);
-});
-
-/* Touch swipe */
-cw.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;dragging=true;clearInterval(auto);},{passive:true});
-cw.addEventListener('touchend',e=>{
-  if(!dragging)return;
-  const diff=startX-e.changedTouches[0].clientX;
-  if(Math.abs(diff)>44)goTo(diff>0?cur+1:cur-1);
-  dragging=false;
-  auto=setInterval(()=>goTo(cur+1),5000);
+document.getElementById('cPrev').addEventListener('click', () => goTo(cur - 1));
+document.getElementById('cNext').addEventListener('click', () => goTo(cur + 1));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  goTo(cur - 1);
+  if (e.key === 'ArrowRight') goTo(cur + 1);
 });
 
-/* Mouse drag */
-let mouseStartX=0, mouseDragging=false, mouseMoved=false;
-cw.style.cursor='grab';
-cw.addEventListener('mousedown',e=>{
-  mouseStartX=e.clientX; mouseDragging=true; mouseMoved=false;
-  cw.style.cursor='grabbing';
-  clearInterval(auto);
-  e.preventDefault();
-});
-window.addEventListener('mousemove',e=>{
-  if(!mouseDragging)return;
-  if(Math.abs(e.clientX-mouseStartX)>6)mouseMoved=true;
-});
-window.addEventListener('mouseup',e=>{
-  if(!mouseDragging)return;
-  const diff=mouseStartX-e.clientX;
-  if(mouseMoved && Math.abs(diff)>44)goTo(diff>0?cur+1:cur-1);
-  mouseDragging=false;
-  cw.style.cursor='grab';
-  auto=setInterval(()=>goTo(cur+1),5000);
-});
-cw.addEventListener('click',e=>{if(mouseMoved)e.stopImmediatePropagation();});
+// drag (touch + mouse)
+let dragX = 0, dragging = false;
 
-let auto=setInterval(()=>goTo(cur+1),5000);
-cw.addEventListener('mouseenter',()=>clearInterval(auto));
-cw.addEventListener('mouseleave',e=>{
-  if(mouseDragging){
-    const diff=mouseStartX-e.clientX;
-    if(Math.abs(diff)>44)goTo(diff>0?cur+1:cur-1);
-    mouseDragging=false; cw.style.cursor='grab';
-  }
-  auto=setInterval(()=>goTo(cur+1),5000);
-});
+function dragStart(x) { dragX = x; dragging = true; clearInterval(autoPlay); }
+function dragEnd(x) {
+  if (!dragging) return;
+  dragging = false;
+  if (Math.abs(dragX - x) > 40) goTo(dragX > x ? cur + 1 : cur - 1);
+  autoPlay = setInterval(() => goTo(cur + 1), 5000);
+}
+
+cWrap.addEventListener('touchstart',  e => dragStart(e.touches[0].clientX), { passive: true });
+cWrap.addEventListener('touchend',    e => dragEnd(e.changedTouches[0].clientX), { passive: true });
+cWrap.addEventListener('mousedown',   e => { dragStart(e.clientX); e.preventDefault(); });
+window.addEventListener('mouseup',    e => dragEnd(e.clientX));
+
+let autoPlay = setInterval(() => goTo(cur + 1), 5000);
+cWrap.addEventListener('mouseenter', () => clearInterval(autoPlay));
+cWrap.addEventListener('mouseleave', () => { if (!dragging) autoPlay = setInterval(() => goTo(cur + 1), 5000); });
 
 /* ── TELEGRAM ── */
-function handleTg(e){
-  if(e.currentTarget.getAttribute('href')==='#'){
+document.getElementById('tgBtn').addEventListener('click', e => {
+  if (e.currentTarget.getAttribute('href') === '#') {
     e.preventDefault();
-    const h=document.getElementById('tgHint');
-    h.style.color='var(--muted-red)';h.style.opacity='1';
-    h.textContent='Канал пока в разработке — скоро появится!';
-    setTimeout(()=>{h.style.color='';h.style.opacity='.45';h.textContent='канал появится совсем скоро';},3000);
+    const h = document.getElementById('tgHint');
+    h.style.color = 'var(--muted-red)'; h.style.opacity = '1';
+    h.textContent = 'Канал пока в разработке — скоро появится!';
+    setTimeout(() => { h.style.color = ''; h.style.opacity = '.45'; h.textContent = 'канал появится совсем скоро'; }, 3000);
   }
-}
+});
 
-/* ── SPARKLES ── */
-const COLORS=['#c4877a','#8aafc0','#e8c97a','#8a9e7e','#f2ddd0','#dae8f0','#c85c5c','#98d8c8'];
-document.addEventListener('click',e=>{
-  for(let i=0;i<8;i++){
-    const s=document.createElement('span');
-    s.className='cursor-sparkle';
-    s.textContent=['✦','✧','★','·','✩'][Math.floor(Math.random()*5)];
-    const ang=(Math.PI*2/8)*i,dist=44+Math.random()*24;
-    s.style.cssText=`left:${e.clientX}px;top:${e.clientY}px;color:${COLORS[Math.floor(Math.random()*COLORS.length)]};font-size:${10+Math.random()*8}px;opacity:1;position:fixed;z-index:9998;pointer-events:none;transition:transform .7s ease-out,opacity .7s ease-out;`;
+/* ── СПАРКЛЫ ── */
+const COLORS = ['#c4877a','#8aafc0','#e8c97a','#8a9e7e','#f2ddd0','#dae8f0','#c85c5c','#98d8c8'];
+document.addEventListener('click', e => {
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement('span');
+    s.className = 'sparkle';
+    s.textContent = ['✦','✧','★','·','✩'][Math.floor(Math.random() * 5)];
+    const ang = (Math.PI * 2 / 8) * i, dist = 42 + Math.random() * 22;
+    s.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;color:${COLORS[i%COLORS.length]};font-size:${9+Math.random()*8}px;transition:transform .65s ease-out,opacity .65s ease-out;`;
     document.body.appendChild(s);
-    requestAnimationFrame(()=>{s.style.transform=`translate(${Math.cos(ang)*dist}px,${Math.sin(ang)*dist}px) scale(0)`;s.style.opacity='0';});
-    setTimeout(()=>s.remove(),750);
+    requestAnimationFrame(() => { s.style.transform = `translate(${Math.cos(ang)*dist}px,${Math.sin(ang)*dist}px) scale(0)`; s.style.opacity = '0'; });
+    setTimeout(() => s.remove(), 700);
   }
 });
 
-/* ── FIREWORKS ── */
-document.getElementById('fireworksBtn').addEventListener('click',function(){
-  this.classList.remove('pop');void this.offsetWidth;this.classList.add('pop');
-  for(let i=0;i<14;i++)setTimeout(launchRocket,i*140);
-  for(let i=0;i<10;i++)setTimeout(launchRocket,2100+i*160);
-  for(let i=0;i<8;i++)setTimeout(launchRocket,3800+i*110);
+/* ── ФЕЙЕРВЕРК ── */
+document.getElementById('fireworksBtn').addEventListener('click', function () {
+  this.classList.remove('pop'); void this.offsetWidth; this.classList.add('pop');
+  for (let i = 0; i < 14; i++) setTimeout(rocket, i * 140);
+  for (let i = 0; i < 10; i++) setTimeout(rocket, 2100 + i * 160);
+  for (let i = 0; i < 8;  i++) setTimeout(rocket, 3800 + i * 110);
 });
-function launchRocket(){
-  const bx=(5+Math.random()*90)/100*window.innerWidth;
-  const by=window.innerHeight*(0.05+Math.random()*0.5);
-  const col=COLORS[Math.floor(Math.random()*COLORS.length)];
-  const r=document.createElement('div');
-  r.style.cssText=`position:fixed;pointer-events:none;z-index:9997;left:${bx-2}px;top:${window.innerHeight+10}px;width:3px;height:16px;border-radius:2px;background:linear-gradient(to top,transparent,${col});`;
+function rocket() {
+  const bx = (5 + Math.random() * 90) / 100 * window.innerWidth;
+  const by = window.innerHeight * (.05 + Math.random() * .5);
+  const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+  const r = document.createElement('div');
+  r.style.cssText = `position:fixed;pointer-events:none;z-index:9997;left:${bx-2}px;top:${window.innerHeight+10}px;width:3px;height:14px;border-radius:2px;background:linear-gradient(to top,transparent,${col});`;
   document.body.appendChild(r);
-  const dur=350+Math.random()*300;const t0=performance.now();
-  (function go(now){
-    const p=Math.min((now-t0)/dur,1);const e=1-Math.pow(1-p,3);
-    r.style.top=(window.innerHeight+10+(by-window.innerHeight-10)*e)+'px';
-    r.style.opacity=String(1-p*0.5);
-    if(p<1)requestAnimationFrame(go);else{r.remove();burst(bx,by);}
+  const dur = 350 + Math.random() * 300, t0 = performance.now();
+  (function go(now) {
+    const p = Math.min((now-t0)/dur,1), e2 = 1-Math.pow(1-p,3);
+    r.style.top = (window.innerHeight+10+(by-window.innerHeight-10)*e2)+'px';
+    r.style.opacity = String(1-p*.5);
+    if (p<1) requestAnimationFrame(go); else { r.remove(); burst(bx,by); }
   })(t0);
 }
-function burst(cx,cy){
-  const n=60+Math.floor(Math.random()*28);
-  const base=COLORS[Math.floor(Math.random()*COLORS.length)];
-  const acc=COLORS[Math.floor(Math.random()*COLORS.length)];
-  for(let i=0;i<n;i++){
-    const ang=(Math.PI*2/n)*i+(Math.random()-.5)*.2;
-    const spd=80+Math.random()*200;
-    const vx=Math.cos(ang)*spd,vy=Math.sin(ang)*spd;
-    const el=document.createElement('div');
-    el.className='fw-piece';
-    const col=Math.random()<.5?base:acc;
-    const k=Math.random();let w,h;
+function burst(cx, cy) {
+  const n = 60+Math.floor(Math.random()*28);
+  const base = COLORS[Math.floor(Math.random()*COLORS.length)];
+  const acc  = COLORS[Math.floor(Math.random()*COLORS.length)];
+  for (let i=0; i<n; i++) {
+    const ang=(Math.PI*2/n)*i+(Math.random()-.5)*.2, spd=80+Math.random()*200;
+    const vx=Math.cos(ang)*spd, vy=Math.sin(ang)*spd;
+    const el=document.createElement('div'); el.className='fw-piece';
+    const col=Math.random()<.5?base:acc, k=Math.random(); let w,h;
     if(k<.4){w=4+Math.random()*4;h=10+Math.random()*10;}
     else if(k<.72){const ss=5+Math.random()*8;w=ss;h=ss;}
     else{w=8+Math.random()*7;h=4+Math.random()*3;}
     el.style.cssText=`width:${w}px;height:${h}px;background:${col};left:${cx}px;top:${cy}px;border-radius:${k<.72?'50%':'2px'};`;
     document.body.appendChild(el);
-    const grav=260+Math.random()*160;
-    let rot=Math.random()*360;const rs=(Math.random()-.5)*300;
-    const tot=1400+Math.random()*800;const t0=performance.now();
+    const grav=260+Math.random()*160; let rot=Math.random()*360;
+    const rs=(Math.random()-.5)*300, tot=1400+Math.random()*800, t0=performance.now();
     (function anim(now){
-      const t=(now-t0)/1000;const p=Math.min(t/(tot/1000),1);
-      el.style.left=(cx+vx*t)+'px';el.style.top=(cy+vy*t+.5*grav*t*t)+'px';
-      el.style.opacity=String(p<.6?1:1-(p-.6)/.4);
-      rot+=rs/60;el.style.transform=`rotate(${rot}deg)`;
-      if(p<1)requestAnimationFrame(anim);else el.remove();
+      const t=(now-t0)/1000, p2=Math.min(t/(tot/1000),1);
+      el.style.left=(cx+vx*t)+'px'; el.style.top=(cy+vy*t+.5*grav*t*t)+'px';
+      el.style.opacity=String(p2<.6?1:1-(p2-.6)/.4);
+      rot+=rs/60; el.style.transform=`rotate(${rot}deg)`;
+      if(p2<1) requestAnimationFrame(anim); else el.remove();
     })(t0);
   }
 }

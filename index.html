@@ -72,14 +72,14 @@ nav {
 .nav-mobile-brand img { width:34px; height:34px; object-fit:contain; }
 .burger-btn {
   width:44px; height:44px; border:none; background:transparent;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  display:flex !important; flex-direction:column !important; align-items:center; justify-content:center;
   gap:5px; cursor:pointer; border-radius:10px; transition:background .2s;
 }
 .burger-btn:hover { background:rgba(90,48,24,.07); }
 .burger-line {
-  width:22px; height:2px; background:var(--warm-brown); border-radius:2px;
+  width:22px; height:2.5px; background:var(--warm-brown); border-radius:2px;
   transition:transform .3s ease, opacity .3s ease; transform-origin:center;
-  display:block;
+  display:block; flex-shrink:0;
 }
 .burger-btn.open .burger-line:nth-child(1) { transform:translateY(7px) rotate(45deg); }
 .burger-btn.open .burger-line:nth-child(2) { opacity:0; transform:scaleX(0); }
@@ -230,11 +230,10 @@ section { position:relative; overflow:hidden; }
 .inside-card-btn.active.sage .inside-card-dot { background:var(--sage); }
 
 /* Панель: текст слева, иллюстрация справа */
-.inside-panel { display:block; opacity:0; pointer-events:none; position:absolute; width:100%; }
-.inside-panel.active { opacity:1; pointer-events:auto; position:relative; animation:insideFadeIn .35s ease forwards; }
+.inside-panels-wrap { position:relative; min-height:clamp(280px,35vw,480px); }
+.inside-panel { display:none; }
+.inside-panel.active { display:block; animation:insideFadeIn .35s ease forwards; }
 @keyframes insideFadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-.inside-panels-wrap { min-height:clamp(280px,35vw,480px); }
-.inside-panel.active { display:block; animation:panelIn .4s ease; }
 /* Десктоп: сетка внутри acc-body */
 .inside-acc-header { display:none; }
 .inside-acc-body {
@@ -320,7 +319,7 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:860px){
-  .inside-panel.active{grid-template-columns:1fr}
+  .inside-acc-body{grid-template-columns:1fr}
   .inside-illus{aspect-ratio:16/9;max-height:none}
 }
 @media(max-width:680px){
@@ -341,7 +340,8 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
 /* ── МОБИЛЬНЫЙ АККОРДЕОН для "Что внутри" ── */
 @media(max-width:680px){
   .inside-cards{display:none}
-  .inside-panel{display:block!important;margin-bottom:8px}
+  .inside-panels-wrap { min-height:0; }
+  .inside-panel{display:block !important; opacity:1 !important; position:static !important; margin-bottom:8px}
   .inside-acc-header{
     display:flex;align-items:center;justify-content:space-between;
     padding:14px 18px;border-radius:14px;cursor:pointer;
@@ -357,10 +357,10 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
   .inside-acc-arrow{font-size:1rem;transition:transform .3s ease;opacity:.5;}
   .inside-panel.active .inside-acc-arrow{transform:rotate(180deg);opacity:1;}
   .inside-acc-body{
-    display:none;
+    display:none !important;
   }
   .inside-panel.active .inside-acc-body{
-    display:block;
+    display:block !important;
     background:white;border:1.5px solid var(--dusty-rose);
     border-top:none;border-radius:0 0 14px 14px;
     padding:16px;
@@ -693,10 +693,11 @@ document.querySelectorAll('.inside-acc-header').forEach(header=>{
     const id=header.dataset.inside;
     const panel=document.getElementById('inside-'+id);
     const isActive=panel.classList.contains('active');
+    // Закрываем все
     document.querySelectorAll('.inside-panel').forEach(p=>p.classList.remove('active'));
+    // Открываем нажатый, если он не был активен
     if(!isActive){
       panel.classList.add('active');
-
     }
   });
 });

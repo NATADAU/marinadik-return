@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>МариНадик возвращается</title>
+<link rel="preload" href="маринадик.png" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Libre+Baskerville:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
@@ -72,18 +73,18 @@ nav {
 .nav-mobile-brand img { width:34px; height:34px; object-fit:contain; }
 .burger-btn {
   width:44px; height:44px; border:none; background:transparent;
-  display:flex !important; flex-direction:column !important; align-items:center; justify-content:center;
-  gap:5px; cursor:pointer; border-radius:10px; transition:background .2s;
+  cursor:pointer; border-radius:10px; transition:background .2s;
+  padding:0; position:relative; flex-shrink:0;
 }
 .burger-btn:hover { background:rgba(90,48,24,.07); }
-.burger-line {
-  width:22px; height:2.5px; background:var(--warm-brown); border-radius:2px;
-  transition:transform .3s ease, opacity .3s ease; transform-origin:center;
-  display:block; flex-shrink:0;
+.burger-btn .burger-icon,
+.burger-btn .close-icon {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  transition:opacity .25s ease, transform .25s ease;
 }
-.burger-btn.open .burger-line:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-.burger-btn.open .burger-line:nth-child(2) { opacity:0; transform:scaleX(0); }
-.burger-btn.open .burger-line:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+.burger-btn .close-icon { opacity:0; transform:rotate(-45deg) scale(.7); }
+.burger-btn.open .burger-icon { opacity:0; transform:rotate(45deg) scale(.7); }
+.burger-btn.open .close-icon { opacity:1; transform:rotate(0deg) scale(1); }
 
 .mobile-menu {
   position:fixed; top:60px; left:0; right:0; z-index:999;
@@ -130,8 +131,8 @@ nav {
 .hero-blob-2{width:400px;height:400px;background:#d4a84b;bottom:-90px;left:-110px;animation-delay:3s;}
 .hero-blob-3{width:320px;height:320px;background:#7a9fb5;top:35%;left:-90px;animation-delay:1.5s;}
 .hero-blob-4{width:280px;height:280px;background:#eeddd3;bottom:100px;right:5%;animation-delay:5s;}
-.hero-logo-wrap { position:relative; z-index:2; margin-bottom:12px; animation:logoIn 1.2s cubic-bezier(.34,1.56,.64,1) both; }
-.hero-logo { width:clamp(120px,15vw,200px); height:auto; display:block; animation:logoFloat 4s ease-in-out infinite; transform-origin:center bottom; }
+.hero-logo-wrap { position:relative; z-index:2; margin-bottom:12px; opacity:0; }
+.hero-logo { width:clamp(120px,15vw,200px); height:auto; display:block; transform-origin:center bottom; }
 @keyframes logoFloat { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-14px) rotate(1deg)} }
 @keyframes logoIn { from{opacity:0;transform:translateY(-60px) scale(.7)} to{opacity:1;transform:translateY(0) scale(1)} }
 .hero-title {
@@ -274,7 +275,7 @@ section { position:relative; overflow:hidden; }
 
 /* ═══ КАРУСЕЛЬ — бесконечная вправо через клонирование ═══ */
 #gallery{background:linear-gradient(160deg,var(--pale-peach) 0%,var(--pale-yellow) 100%)}
-.carousel-wrap{position:relative;overflow:hidden;border-radius:18px;box-shadow:0 8px 28px rgba(90,48,24,.13);background:#2a1a08;aspect-ratio:4/3;max-height:360px;max-width:640px;margin:0 auto;width:100%}
+.carousel-wrap{user-select:none;position:relative;overflow:hidden;border-radius:18px;box-shadow:0 8px 28px rgba(90,48,24,.13);background:#2a1a08;aspect-ratio:4/3;max-height:360px;max-width:640px;margin:0 auto;width:100%}
 .carousel-track{display:flex;height:100%;will-change:transform;width:100%}
 .carousel-track.animated{transition:transform .55s cubic-bezier(.77,0,.18,1)}
 .carousel-slide{width:100%;min-width:100%;max-width:100%;height:100%;position:relative;overflow:hidden;flex:0 0 100%;flex-shrink:0}
@@ -393,9 +394,19 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
       МариНадик
     </a>
     <button class="burger-btn" id="burgerBtn" aria-label="Меню">
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
+      <span class="burger-icon">
+        <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect y="0" width="22" height="2.5" rx="1.25" fill="#5a3018"/>
+          <rect y="6.75" width="22" height="2.5" rx="1.25" fill="#5a3018"/>
+          <rect y="13.5" width="22" height="2.5" rx="1.25" fill="#5a3018"/>
+        </svg>
+      </span>
+      <span class="close-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="1" y1="1" x2="17" y2="17" stroke="#5a3018" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="17" y1="1" x2="1" y2="17" stroke="#5a3018" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </span>
     </button>
   </div>
 </nav>
@@ -624,6 +635,25 @@ footer p.footer-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95r
 </footer>
 
 <script>
+/* ── LOGO LOAD ── */
+(function(){
+  var wrap = document.querySelector('.hero-logo-wrap');
+  var img  = document.querySelector('.hero-logo');
+  function revealLogo(){
+    wrap.style.animation = 'logoIn 1.0s cubic-bezier(.34,1.56,.64,1) both';
+    wrap.style.opacity   = '1';
+    setTimeout(function(){
+      img.style.animation = 'logoFloat 4s ease-in-out infinite';
+    }, 1050);
+  }
+  if(img.complete && img.naturalWidth > 0){
+    revealLogo();
+  } else {
+    img.addEventListener('load', revealLogo);
+    img.addEventListener('error', function(){ wrap.style.opacity='1'; });
+  }
+})();
+
 /* ── NAV SCROLL ── */
 const sections=document.querySelectorAll('section[id],footer[id]');
 const navTabs=document.querySelectorAll('.nav-tab');
@@ -782,19 +812,49 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight')goTo(cur+1);
 });
 
-cw.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;dragging=true;},{passive:true});
+/* Touch swipe */
+cw.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;dragging=true;clearInterval(auto);},{passive:true});
 cw.addEventListener('touchend',e=>{
   if(!dragging)return;
   const diff=startX-e.changedTouches[0].clientX;
   if(Math.abs(diff)>44)goTo(diff>0?cur+1:cur-1);
   dragging=false;
+  auto=setInterval(()=>goTo(cur+1),5000);
 });
+
+/* Mouse drag */
+let mouseStartX=0, mouseDragging=false, mouseMoved=false;
+cw.style.cursor='grab';
+cw.addEventListener('mousedown',e=>{
+  mouseStartX=e.clientX; mouseDragging=true; mouseMoved=false;
+  cw.style.cursor='grabbing';
+  clearInterval(auto);
+  e.preventDefault();
+});
+window.addEventListener('mousemove',e=>{
+  if(!mouseDragging)return;
+  if(Math.abs(e.clientX-mouseStartX)>6)mouseMoved=true;
+});
+window.addEventListener('mouseup',e=>{
+  if(!mouseDragging)return;
+  const diff=mouseStartX-e.clientX;
+  if(mouseMoved && Math.abs(diff)>44)goTo(diff>0?cur+1:cur-1);
+  mouseDragging=false;
+  cw.style.cursor='grab';
+  auto=setInterval(()=>goTo(cur+1),5000);
+});
+cw.addEventListener('click',e=>{if(mouseMoved)e.stopImmediatePropagation();});
 
 let auto=setInterval(()=>goTo(cur+1),5000);
 cw.addEventListener('mouseenter',()=>clearInterval(auto));
-cw.addEventListener('mouseleave',()=>{auto=setInterval(()=>goTo(cur+1),5000);});
-cw.addEventListener('touchstart',()=>clearInterval(auto),{passive:true});
-cw.addEventListener('touchend',()=>{auto=setInterval(()=>goTo(cur+1),5000);},{passive:true});
+cw.addEventListener('mouseleave',e=>{
+  if(mouseDragging){
+    const diff=mouseStartX-e.clientX;
+    if(Math.abs(diff)>44)goTo(diff>0?cur+1:cur-1);
+    mouseDragging=false; cw.style.cursor='grab';
+  }
+  auto=setInterval(()=>goTo(cur+1),5000);
+});
 
 /* ── TELEGRAM ── */
 function handleTg(e){
